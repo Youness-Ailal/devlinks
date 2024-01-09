@@ -21,7 +21,7 @@
   --backdrop-color: rgba(255, 255, 255, 0.1);
 
   --shadow-sm: 0 0 0.2rem 0.1rem rgb(139, 92, 246, 0.1);
-  --shadow-md: 0 0 0.6rem 0.2rem rgb(139, 92, 246, 0.15);
+  --shadow-md: 0 0 0.8rem 0.3rem rgb(139, 92, 246, 0.18);
   --shadow-lg: 0 0 1.4rem 0.5em rgb(139, 92, 246, 0.2);
 
   --image-grayscale: 0;
@@ -29,8 +29,8 @@
 
   --color-brand-50: #f5f3ff;
   --color-brand-100: #ede9fe;
+  --color-brand-150: #e7e2fe;
   --color-brand-200: #ddd6fe;
-
   --color-brand-500: #8b5cf6;
   --color-brand-600: #7c3aed;
   --color-brand-700: #6d28d9;

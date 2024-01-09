@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { HiMiniBars2 } from "react-icons/hi2";
 import Select from "@/components/Select";
 import LinkInput from "@/components/LinkInput";
-import Text from "@/components/Text";
 
 const StyledFormRow = styled.div`
   display: flex;
@@ -22,7 +21,7 @@ function FormRow() {
           <p className="font-bold text-base ">Link #1</p>
           <button
             type="button"
-            className="text-base ml-auto text-gray-600 hover:text-gray-900 hover:underline underline-offset-2 ">
+            className="text-base ml-auto text-gray-600  hover:underline underline-offset-2 hover:text-red-400">
             Remove
           </button>
         </div>
