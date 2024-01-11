@@ -5,7 +5,7 @@ import Text from "@/components/Text";
 import { HiPlus } from "react-icons/hi2";
 import LinksForm from "./LinksForm";
 import {} from "@/components/Select";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { addDemo } from "./linksSlice";
 
 function Customizing() {

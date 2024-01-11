@@ -2,7 +2,6 @@ import Container from "@/components/Container";
 import styled from "styled-components";
 import canvas from "../../assets/mobile.svg";
 import { useAppSelector } from "@/store/hooks";
-import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 

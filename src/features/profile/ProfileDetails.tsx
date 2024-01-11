@@ -15,9 +15,9 @@ const StyledForm = styled.form`
   gap: 1rem;
 `;
 type FormValues = {
-  firstName?: string;
-  lastName?: string;
-  avatar?: File;
+  firstName: string;
+  lastName: string;
+  avatar: File[];
 };
 
 function ProfileDetails() {
@@ -27,17 +27,12 @@ function ProfileDetails() {
     user: { firstName, lastName, email, avatar },
     isUpdatingUser,
   } = user;
-  const { register, handleSubmit, formState, getValues, watch } = useForm();
+  const { register, handleSubmit, formState, watch } = useForm();
   const { errors } = formState;
   const isLoading = isUpdatingUser;
 
   function onSubmit({ ...data }: FormValues) {
     dispatch(updateUserThunk(data));
-    // toast.promise(dispatch(updateUserThunk(data)), {
-    //   loading: "updating...",
-    //   success: "Profile changes successfuly updated!",
-    //   error: "Profile Changes could not be updated",
-    // });
   }
 
   return (
@@ -58,7 +53,7 @@ function ProfileDetails() {
         <div className="flex flex-col gap-10 p-4 pt-8 bg-gray-50 border rounded-md border-violet-50">
           <Input
             disabled={isLoading}
-            error={errors?.firstName?.message}
+            error={errors?.firstName?.message.toString()}
             type="texts"
             defaultValue={firstName}
             id="firstName"
@@ -73,7 +68,7 @@ function ProfileDetails() {
           />
           <Input
             disabled={isLoading}
-            error={errors?.lastName?.message}
+            error={errors?.lastName?.message.toString()}
             type="texts"
             id="lastName"
             defaultValue={lastName}

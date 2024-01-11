@@ -1,16 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentProps, forwardRef } from "react";
-import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 import styled from "styled-components";
 
 type InputProps = {
   label: string;
   id: string;
-  error:
-    | string
-    | FieldError
-    | Merge<FieldError, FieldErrorsImpl<any>>
-    | undefined;
+  error?: string;
 } & ComponentProps<"input">;
 
 const StyledInput = styled.input`
