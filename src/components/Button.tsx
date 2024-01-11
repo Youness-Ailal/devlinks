@@ -15,15 +15,21 @@ const StyledButton = styled.button`
   justify-content: center;
   gap: 0.4rem;
   width: 100%;
+  &:disabled {
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.8;
+  }
 `;
 
-function Button({ variant = "primary", children }: ButtonProps) {
+function Button({ variant = "primary", children, ...props }: ButtonProps) {
   return (
     <StyledButton
+      {...props}
       className={twMerge([
         `${
           variant === "primary" &&
-          "bg-violet-600 hover:bg-violet-700 text-white"
+          "bg-violet-600 hover:bg-violet-700  text-white"
         }`,
         `${
           variant === "outline" &&

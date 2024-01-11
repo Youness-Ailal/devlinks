@@ -9,7 +9,6 @@ export function useOutsideClick(handler, listenCapturing = true) {
         if (ref.current && !ref.current.contains(e.target)) {
           handler();
         }
-        console.log(ref.current);
       }
 
       document.addEventListener("click", handleClick, listenCapturing);

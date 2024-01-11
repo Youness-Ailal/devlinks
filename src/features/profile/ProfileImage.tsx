@@ -1,10 +1,14 @@
 import Text from "@/components/Text";
 import styled from "styled-components";
-import { CiImageOn } from "react-icons/ci";
+import { IoImageOutline } from "react-icons/io5";
 import { HiPlus } from "react-icons/hi2";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+import { useAppDispatch } from "@/store/hooks";
+import { addPreviewAvatar } from "./userSlice";
 
 const Label = styled.label`
-  height: 14rem;
+  height: 12rem;
   aspect-ratio: 1;
   border-radius: var(--radius-sm);
   background-color: var(--color-brand-100);
@@ -14,31 +18,97 @@ const Label = styled.label`
   justify-content: center;
   gap: 1rem;
   transition: 0.2s;
+  border: 1px dashed var(--color-brand-300);
   &:hover {
     background-color: var(--color-brand-150);
+    border: 1px dashed var(--color-brand-400);
   }
 `;
-function ProfileImage() {
+const LabelWithImage = styled.label`
+  height: 12rem;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  display: flex;
+  background-size: cover;
+  background-position: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  transition: 0.2s;
+  border: 1px solid var(--color-grey-200);
+  overflow: hidden;
+  &:hover div {
+    opacity: 1;
+  }
+`;
+
+function ProfileImage({ register, watch, avatar, isLoading }) {
+  const [image, setImage] = useState<string | ArrayBuffer | null>(avatar);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const file = watch("avatar");
+
+    if (file?.length) {
+      const fileReader = new FileReader();
+
+      fileReader.onload = () => {
+        setImage(fileReader.result);
+        dispatch(addPreviewAvatar(fileReader.result));
+      };
+
+      fileReader.readAsDataURL(file[0]);
+    }
+  }, [watch("avatar")]);
+
   return (
-    <div className="flex gap-10 justify-between bg-gray-50  p-4 items-center">
+    <div className="flex gap-10 justify-between bg-gray-50  p-4 items-center border rounded-md border-violet-50">
       <Text>Profile Picture</Text>
       <div className="flex items-center gap-8">
-        <Label
-          className="text-lg text-violet-600 font-medium cursor-pointer"
-          htmlFor="image">
-          <p className="text-4xl">
-            <CiImageOn />
-          </p>
-          <p className=" flex items-center gap-1">
-            <HiPlus />
-            Upload image
-          </p>
-          <input className="hidden" id="image" type="file" accept="image/*" />
-        </Label>
-        <p className="text-[1rem] text-gray-500 mr-6 leading-[2]">
-          Imgaes must be below 1024x1024px.
+        <input
+          disabled={isLoading}
+          className="hidden"
+          id="image"
+          type="file"
+          accept="image/*"
+          {...register("avatar")}
+        />
+        {!image && (
+          <Label
+            className="text-base text-violet-600 font-medium cursor-pointer"
+            htmlFor="image">
+            <p className="text-4xl">
+              <IoImageOutline />
+            </p>
+            <p className="flex text-lg font-semibold items-center gap-1">
+              <HiPlus />
+              Upload image
+            </p>
+          </Label>
+        )}
+        {image && (
+          <LabelWithImage
+            className={cn("cursor-pointer", {
+              "cursor-not-allowed pointer-events-none opacity-80": isLoading,
+            })}
+            htmlFor="image"
+            style={{ backgroundImage: `url(${image})` }}>
+            <div className="opacity-0 gap-3 duration-200 h-full w-full text-gray-200 flex items-center justify-center flex-col bg-zinc-900/70">
+              <p className="text-4xl">
+                <IoImageOutline />
+              </p>
+              <p className="flex text-lg font-semibold items-center gap-1">
+                Change Image
+              </p>
+            </div>
+          </LabelWithImage>
+        )}
+
+        <p className="text-[1rem]  text-gray-500 mr-6 leading-[2]">
+          Images must be below 1024x1024px.
           <br />
-          Use PNG,JPG, or BMP format
+          Use PNG, JPG, or BMP format
         </p>
       </div>
     </div>

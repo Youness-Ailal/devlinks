@@ -4,8 +4,16 @@ import Header from "@/components/Header";
 import Text from "@/components/Text";
 import { HiPlus } from "react-icons/hi2";
 import LinksForm from "./LinksForm";
+import {} from "@/components/Select";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addDemo } from "./linksSlice";
 
 function Customizing() {
+  const dispatch = useAppDispatch();
+  function addDemoLink() {
+    dispatch(addDemo());
+  }
+
   return (
     <Container className="flex flex-col px-10 py-10 gap-6">
       <div className="flex flex-col gap-1">
@@ -14,7 +22,7 @@ function Customizing() {
           Add/edit/remove links and then share all your profiles with the world!
         </Text>
         <div className="mt-6">
-          <Button variant="outline">
+          <Button onClick={addDemoLink} variant="outline">
             <HiPlus /> Add new link
           </Button>
         </div>

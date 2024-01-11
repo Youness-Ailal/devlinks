@@ -1,13 +1,13 @@
-import { FaYoutube } from "react-icons/fa";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import styled from "styled-components";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 
+export type OptionType = { option: string; value: string; icon: string };
 type SelectProps = {
-  label?: string;
-  options?: { option: string; value: string }[];
+  options: OptionType[];
+  defaultSelect: OptionType | null;
 };
 
 const StyledSelect = styled.div`
@@ -50,10 +50,27 @@ const Options = styled(motion.div)`
   border-radius: var(--radius-sm);
   top: 3.6rem;
   transform-origin: center;
+  max-height: 15rem;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
 `;
-function Select({ label = "Select an option", options }: SelectProps) {
+const OptionImg = styled.img`
+  filter: contrast(0.2);
+`;
+function Select({ options, defaultSelect }: SelectProps) {
   const [show, setShow] = useState(false);
-  const [option, setOption] = useState("");
+  const [option, setOption] = useState<OptionType | null>(() => {
+    const firstOption = options[0];
+    if (firstOption)
+      return {
+        option: firstOption.option,
+        value: firstOption.value,
+        icon: firstOption.icon,
+      };
+    return null;
+  });
   const ref = useOutsideClick(closeSelect);
   function toggleShow() {
     setShow(prev => !prev);
@@ -62,18 +79,18 @@ function Select({ label = "Select an option", options }: SelectProps) {
     setShow(false);
   }
 
-  function handleSelect(value: string) {
-    setOption(value);
+  function handleSelect(option: OptionType) {
+    setOption(option);
     closeSelect();
   }
   return (
     <StyledSelect ref={ref}>
       <SelectHeader onClick={toggleShow}>
-        {(
-          <p className="flex items-center gap-2">
-            <FaYoutube /> {option}
-          </p>
-        ) || label}
+        {defaultSelect
+          ? Label(defaultSelect)
+          : option
+          ? Label(option)
+          : "Select an option"}
         <p className="text-violet-600 text-xl">
           <HiOutlineChevronDown />
         </p>
@@ -85,19 +102,37 @@ function Select({ label = "Select an option", options }: SelectProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.9 }}
             transition={{ duration: 0.2 }}>
-            <Option onClick={() => handleSelect("Youtube")}>
-              <FaYoutube /> Youtube
-            </Option>
-            <Option>
-              <FaYoutube /> Youtube
-            </Option>
-            <Option>
-              <FaYoutube /> Youtube
-            </Option>
+            {options.map(item => {
+              return (
+                <Option
+                  key={item.value}
+                  onClick={() =>
+                    handleSelect({
+                      option: item.option,
+                      value: item.value,
+                      icon: item.icon,
+                    })
+                  }>
+                  <div className="flex items-center gap-2">
+                    <OptionImg src={item.icon} alt={`icon of ${item.value}`} />
+                    <p>{item.option}</p>
+                  </div>
+                </Option>
+              );
+            })}
           </Options>
         )}
       </AnimatePresence>
     </StyledSelect>
+  );
+}
+
+function Label(option: OptionType) {
+  return (
+    <div className="flex items-center gap-2">
+      <OptionImg src={option?.icon} alt={`icon of ${option?.value}`} />
+      <p>{option?.option}</p>
+    </div>
   );
 }
 

@@ -1,43 +1,61 @@
-type SocialType = {
+export type SocialType = {
+  id: number;
   name: string;
   icon: string;
+  status: "used" | "unused";
 };
 
-export const socials: SocialType[] = [
+const socials: SocialType[] = [
   {
+    id: 37,
     name: "Facebook",
     icon: "<FaFacebookSquare />",
+    status: "unused",
   },
   {
+    id: 39,
+    name: "Whatsapp",
+    icon: "<FaWhatsappSquare />",
+    status: "unused",
+  },
+  {
+    id: 44,
     name: "YouTube",
-    icon: "<FaYoutube />",
+    icon: "<FaYoutubeSquare />",
+    status: "unused",
   },
   {
+    id: 49,
     name: "Twitter",
-    icon: "<FaTwitter />",
+    icon: "<FaTwitterSquare />",
+    status: "unused",
   },
   {
+    id: 47,
     name: "Instagram",
-    icon: "<FaInstagram />",
+    icon: "<FaInstagramSquare />",
+    status: "unused",
   },
   {
+    id: 46,
     name: "LinkedIn",
-    icon: "<FaLinkedin />",
+    icon: "<FaLinkedinSquare />",
+    status: "unused",
   },
+
   {
-    name: "GitHub",
-    icon: "<FaGithub />",
-  },
-  {
+    id: 51,
     name: "Reddit",
-    icon: "<RiRedditFill />",
+    icon: "<RiRedditFillSquare />",
+    status: "unused",
   },
+
   {
-    name: "WhatsApp",
-    icon: "<FaWhatsapp />",
-  },
-  {
-    name: "Telegram",
-    icon: "<FaTelegram />",
+    id: 50,
+    name: "Snapchat",
+    icon: "<FaTelegramSquare />",
+    status: "unused",
   },
 ];
+
+export default socials;

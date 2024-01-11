@@ -1,5 +1,11 @@
+import SpinnerScreen from "@/components/SpinnerScreen";
+
 function Preview() {
-  return <div></div>;
+  return (
+    <div>
+      <SpinnerScreen />
+    </div>
+  );
 }
 
 export default Preview;

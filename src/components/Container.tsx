@@ -5,6 +5,7 @@ const StyledContainer = styled.div`
   max-width: 100rem;
   background-color: var(--color-grey-0);
   border-radius: var(--radius-md);
+  border: 1px solid var(--color-brand-50);
 `;
 type ContainerProps = ComponentProps<"div"> & {
   as?: string;
