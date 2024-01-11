@@ -21,15 +21,12 @@ const Input = styled.input`
     box-shadow: var(--shadow-md);
   }
 `;
-const Label = styled.label`
-  font-size: 1rem;
-`;
+
 const IconSpan = styled.span``;
 
-function LinkInput({ label = "Link", id, children, ...props }: InputTypes) {
+function LinkInput({ id, children, ...props }: InputTypes) {
   return (
     <div>
-      {/* <Label htmlFor={id}>{label}</Label> */}
       <Input {...props} name={id} type="text" />
       <IconSpan>{children}</IconSpan>
     </div>

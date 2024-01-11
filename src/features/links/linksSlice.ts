@@ -1,4 +1,3 @@
-import { getCurrentUserThunk } from "@/features/profile/userSlice";
 import {
   createAsyncThunk,
   createSlice,
@@ -69,9 +68,9 @@ const linksSlice = createSlice({
       .addCase(getUserLinksThunk.pending, state => {
         state.status = "pending";
       })
-      .addCase(getUserLinksThunk.fulfilled, (state, action) => {
+      .addCase(getUserLinksThunk.fulfilled, state => {
         state.status = "idle";
-        state.userLinks = action.payload;
+        // state.userLinks = action.payload;
       })
       .addCase(getUserLinksThunk.rejected, state => {
         state.status = "error";

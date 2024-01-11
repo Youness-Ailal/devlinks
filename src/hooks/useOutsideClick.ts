@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useEffect, useRef } from "react";
 
 export function useOutsideClick(handler, listenCapturing = true) {
@@ -6,6 +7,7 @@ export function useOutsideClick(handler, listenCapturing = true) {
   useEffect(
     function () {
       function handleClick(e: Event) {
+        // @ts-ignore
         if (ref.current && !ref.current.contains(e.target)) {
           handler();
         }
