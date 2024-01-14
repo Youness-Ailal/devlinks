@@ -16,7 +16,7 @@ const StyledButton = styled.button`
   gap: 0.4rem;
   width: 100%;
   &:disabled {
-    pointer-events: none;
+    cursor: not-allowed;
     user-select: none;
     opacity: 0.8;
   }
@@ -29,11 +29,11 @@ function Button({ variant = "primary", children, ...props }: ButtonProps) {
       className={twMerge([
         `${
           variant === "primary" &&
-          "bg-violet-600 hover:bg-violet-700  text-white"
+          "bg-violet-600 hover:bg-violet-700  text-white disabled:hover:bg-violet-600"
         }`,
         `${
           variant === "outline" &&
-          "outline outline-1 outline-violet-500 hover:bg-violet-50 text-violet-600"
+          "outline outline-1 outline-violet-500 hover:bg-violet-50 text-violet-600 disabled:hover:bg-transparent"
         }`,
       ])}>
       {children}{" "}

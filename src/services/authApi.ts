@@ -33,15 +33,19 @@ export async function getCurrentUser() {
 
   return data?.user;
 }
-type UserData = {
+export type UserDataType = {
   firstName?: string;
   lastName?: string;
   avatar?: File[] | undefined;
 };
-export async function updateUser({ firstName, lastName, avatar }: UserData) {
+export async function updateUser({
+  firstName,
+  lastName,
+  avatar,
+}: UserDataType) {
   // 1. update first name and/or last name
 
-  let updateData: { data: UserData };
+  let updateData: { data: UserDataType };
 
   if (firstName && lastName) {
     updateData = { data: { firstName, lastName } };
@@ -49,12 +53,16 @@ export async function updateUser({ firstName, lastName, avatar }: UserData) {
   const { data, error } = await supabase.auth.updateUser(updateData);
 
   if (error) throw new Error(error.message);
-  console.log(data);
-  if (!avatar?.length) return data?.user;
+  if (!avatar?.length) return data;
 
   // 2. handleFile
 
   const file = avatar[0];
+  const filesizeInMb = file.size / 1024 ** 2;
+
+  if (filesizeInMb > 2)
+    throw new Error("Image should be lower than 2MB in size");
+
   const fileName = `avatar-${firstName}-${lastName}-${Math.random() * 100}`;
   const { error: storageError } = await supabase.storage
     .from("avatars")
@@ -67,8 +75,6 @@ export async function updateUser({ firstName, lastName, avatar }: UserData) {
       data: { data: { avatar: avatarLink } },
     });
   if (errorFile) throw new Error(errorFile.message);
-
-  console.log(updatedData);
 
   return updatedData?.user;
 }

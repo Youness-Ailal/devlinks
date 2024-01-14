@@ -5,9 +5,10 @@ import Button from "@/components/Button";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import ProfileImage from "./ProfileImage";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Input from "@/components/Input";
-import { updateUserThunk } from "./userSlice";
+import { useUser } from "./useUser";
+import { useUpdateUser } from "./useUpdateUser";
+import toast from "react-hot-toast";
 
 const StyledForm = styled.form`
   display: flex;
@@ -21,22 +22,38 @@ type FormValues = {
 };
 
 function ProfileDetails() {
-  const user = useAppSelector(state => state.user);
-  const dispatch = useAppDispatch();
   const {
-    user: { firstName, lastName, email, avatar },
-    isUpdatingUser,
-  } = user;
-  const { register, handleSubmit, formState, watch } = useForm();
+    user: {
+      email,
+      user_metadata: {
+        firstName,
+        lastName,
+        data: { avatar },
+      },
+    },
+  } = useUser();
+  const { update, status } = useUpdateUser();
+  const isLoading = status === "pending";
+
+  const { register, handleSubmit, formState, watch } = useForm({
+    defaultValues: {
+      firstName,
+      lastName,
+    },
+  });
   const { errors } = formState;
-  const isLoading = isUpdatingUser;
+
+  const hasMadeChanges =
+    firstName !== watch("firstName") ||
+    lastName !== watch("lastName") ||
+    watch("avatar")?.length;
 
   function onSubmit({ ...data }: FormValues) {
-    dispatch(updateUserThunk(data));
+    update({ ...data });
   }
 
   return (
-    <Container className="flex flex-col px-10 py-10 gap-6">
+    <Container className="flex flex-col gap-6 p-10 max-[600px]:p-4">
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-1">
           <Header>Profile Details</Header>
@@ -55,7 +72,7 @@ function ProfileDetails() {
             disabled={isLoading}
             error={errors?.firstName?.message.toString()}
             type="texts"
-            defaultValue={firstName}
+            // defaultValue={firstName}
             id="firstName"
             label="First Name"
             {...register("firstName", {
@@ -71,7 +88,7 @@ function ProfileDetails() {
             error={errors?.lastName?.message.toString()}
             type="texts"
             id="lastName"
-            defaultValue={lastName}
+            // defaultValue={lastName}
             label="Last Name"
             {...register("lastName", {
               required: "This field is required",
@@ -89,9 +106,9 @@ function ProfileDetails() {
             label="Email"
           />
         </div>
-        <div className="border-t border-gray-300 flex justify-end px-4 py-6 mt-auto">
+        <div className="border-t border-gray-300 flex justify-end px-4 py-6 mt-auto max-[1000px]:block">
           <div>
-            <Button disabled={isLoading} variant="primary">
+            <Button disabled={isLoading || !hasMadeChanges} variant="primary">
               Update Profile
             </Button>
           </div>

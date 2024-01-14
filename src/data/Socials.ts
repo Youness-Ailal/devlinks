@@ -1,60 +1,60 @@
 export type SocialType = {
-  id: number;
+  id: string;
   name: string;
-  icon: string;
-  status: "used" | "unused";
+  label: string;
 };
 
 const socials: SocialType[] = [
   {
-    id: 37,
+    id: "37",
     name: "Facebook",
-    icon: "<FaFacebookSquare />",
-    status: "unused",
+    label: "https://facebook.com/{username}",
   },
   {
-    id: 39,
+    id: "39",
     name: "Whatsapp",
-    icon: "<FaWhatsappSquare />",
-    status: "unused",
+    label: "https://wa.me/{phone}",
   },
   {
-    id: 44,
+    id: "44",
     name: "YouTube",
-    icon: "<FaYoutubeSquare />",
-    status: "unused",
+    label: "https://youtube.com/c/{channel}",
   },
   {
-    id: 49,
+    id: "49",
     name: "Twitter",
-    icon: "<FaTwitterSquare />",
-    status: "unused",
+    label: "https://twitter.com/{username}",
   },
   {
-    id: 47,
+    id: "47",
     name: "Instagram",
-    icon: "<FaInstagramSquare />",
-    status: "unused",
+    label: "https://instagram.com/{username}",
   },
   {
-    id: 46,
+    id: "52",
+    name: "Github",
+    label: "https://reddit.com/user/{username}",
+  },
+  {
+    id: "46",
     name: "LinkedIn",
-    icon: "<FaLinkedinSquare />",
-    status: "unused",
+    label: "https://linkedin.com/in/{username}",
+  },
+  {
+    id: "58",
+    name: "Twitch",
+    label: "https://twitch.tv/@{username}",
   },
 
   {
-    id: 51,
+    id: "51",
     name: "Reddit",
-    icon: "<RiRedditFillSquare />",
-    status: "unused",
+    label: "https://reddit.com/user/{username}",
   },
-
   {
-    id: 50,
-    name: "Snapchat",
-    icon: "<FaTelegramSquare />",
-    status: "unused",
+    id: "54",
+    name: "Tiktok",
+    label: "https://tiktok.com/@{username}",
   },
 ];
 

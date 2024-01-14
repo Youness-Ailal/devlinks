@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Link, NavLink, type To } from "react-router-dom";
+import { Link, NavLink, NavLinkProps, type To } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledNavLink = styled(NavLink)`
@@ -11,6 +11,7 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
+  z-index: 99;
   border-radius: var(--radius-sm);
   &:hover {
     color: var(--color-grey-600);
@@ -43,10 +44,21 @@ type LinkProps = {
   children: ReactNode;
   to: To;
   variant?: "primary" | "outline";
+  className?: string;
 };
-function ButtonLink({ children, to, variant = "primary" }: LinkProps) {
+function ButtonLink({
+  children,
+  to,
+  variant = "primary",
+  className,
+  ...props
+}: LinkProps) {
   if (variant === "outline") {
-    return <StyledLink to={to}>{children}</StyledLink>;
+    return (
+      <StyledLink to={to} className={className} {...props}>
+        {children}
+      </StyledLink>
+    );
   }
   return <StyledNavLink to={to}>{children} </StyledNavLink>;
 }

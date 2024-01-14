@@ -45,6 +45,12 @@ const Span = styled.span`
   top: -1.6rem;
   font-size: 0.9rem;
   color: var(--color-red-500);
+  @media (max-width: 526px) {
+    left: auto;
+    top: auto;
+    right: 0;
+    bottom: -1.6rem;
+  }
 `;
 
 const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
@@ -52,9 +58,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   ref
 ) {
   return (
-    <div className="grid grid-cols-[1fr_3fr] items-center gap-4 justify-between relative">
+    <div className="grid grid-cols-[1fr_3fr] items-center gap-4 justify-between relative max-[526px]:flex max-[526px]:flex-col max-[526px]:items-start max-[526px]:w-full">
       <Label htmlFor={id}>{label}</Label>
-      <div className="relative">
+      <div className="relative w-full">
         {error && <Span>{error}</Span>}
         <StyledInput className={`${error && "error"}`} ref={ref} {...props} />
       </div>

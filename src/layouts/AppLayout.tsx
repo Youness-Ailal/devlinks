@@ -1,10 +1,10 @@
 import Header from "@/components/Nav";
 import Spinner from "@/components/Spinner";
-import { getUserLinksThunk } from "@/features/links/linksSlice";
-import { getCurrentUserThunk } from "@/features/profile/userSlice";
-import { signIn } from "@/services/authApi";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { type ReactNode, useEffect } from "react";
+import { useLinksContext } from "@/context/LinksContext";
+// import { useLogin } from "@/features/auth/useLogin";
+import { useUser } from "@/features/auth/useUser";
+import { useLinks } from "@/features/links/useLinks";
+import { useEffect, type ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
@@ -14,30 +14,30 @@ const StyledLayout = styled.div`
   justify-content: center;
   max-width: 100rem;
   margin: 0 auto;
+  padding: 0 1rem;
 `;
 const Main = styled.main`
   display: grid;
   grid-template-columns: 1fr 1.4fr;
+
   gap: 2rem;
   margin-top: 2rem;
   min-height: 51rem;
   overflow-x: hidden;
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 function AppLayout() {
-  const status = useAppSelector(state => state.user.status);
-  const isLoading = status !== "idle";
+  // const { login } = useLogin();
 
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    const signInAndFetchUser = async () => {
-      await signIn({ email: "test@gmail.com", password: "test123" });
-      dispatch(getCurrentUserThunk());
-      dispatch(getUserLinksThunk());
-    };
+  const { isLoading } = useUser();
 
-    signInAndFetchUser();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   login({ email: "test@gmail.com", password: "test123" });
+  // }, []);
+
   let Content: ReactNode;
   if (isLoading) {
     Content = (

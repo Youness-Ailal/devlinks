@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import styled from "styled-components";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { ICON_URL } from "@/utils/constants";
+import { useLinksContext } from "@/context/LinksContext";
+import socials from "@/data/Socials";
+import DisplayIcon from "./DisplayIcon";
+import { cn } from "@/lib/utils";
+import { colors } from "@/data/Colors";
 
-export type OptionType = { option: string; value: string; icon: string };
+export type OptionType = {
+  id: string;
+  name: string;
+  link?: string;
+};
 type SelectProps = {
   options: OptionType[];
-  defaultSelect: OptionType | null;
+  previewLink: OptionType;
 };
 
 const StyledSelect = styled.div`
@@ -52,6 +62,7 @@ const Options = styled(motion.div)`
   transform-origin: center;
   max-height: 15rem;
   overflow-y: scroll;
+  z-index: 99;
   &::-webkit-scrollbar {
     width: 0.5rem;
   }
@@ -59,19 +70,39 @@ const Options = styled(motion.div)`
 const OptionImg = styled.img`
   filter: contrast(0.2);
 `;
-function Select({ options, defaultSelect }: SelectProps) {
+function Select({ options, previewLink }: SelectProps) {
   const [show, setShow] = useState(false);
+  const [newOptions, setNewOptions] = useState(options);
+  const { updatePreviewLink, previewLinks } = useLinksContext();
+
+  const allIds = previewLinks?.map(item => item.id)?.join(" ") || "";
+  useEffect(() => {
+    setNewOptions(options.filter(item => !allIds.includes(item.id)));
+  }, [allIds, options]);
+
   const [option, setOption] = useState<OptionType | null>(() => {
-    const firstOption = options[0];
-    if (firstOption)
-      return {
-        option: firstOption.option,
-        value: firstOption.value,
-        icon: firstOption.icon,
-      };
-    return null;
+    const linkIndex = options.findIndex(item => item.id === previewLink.id);
+
+    if (linkIndex >= 0) {
+      return options[linkIndex];
+    }
+    return options[0];
   });
+
+  useEffect(() => {
+    updatePreviewLink({
+      id: previewLink.id,
+      newData: {
+        id: socials.find(item => item.name === option.name).id,
+        name: option.name,
+        link: previewLink.link || "",
+        // ...previewLink,
+      },
+    });
+  }, [option]);
+
   const ref = useOutsideClick(closeSelect);
+
   function toggleShow() {
     setShow(prev => !prev);
   }
@@ -86,11 +117,16 @@ function Select({ options, defaultSelect }: SelectProps) {
   return (
     <StyledSelect ref={ref}>
       <SelectHeader onClick={toggleShow}>
-        {defaultSelect
-          ? Label(defaultSelect)
-          : option
-          ? Label(option)
-          : "Select an option"}
+        {
+          <div key={option.id}>
+            <div className="flex items-center gap-2 text-base">
+              <p className="text-2xl">
+                <DisplayIcon iconName={option.name} />
+              </p>
+              <p>{option.name}</p>
+            </div>
+          </div>
+        }
         <p className="text-violet-600 text-xl">
           <HiOutlineChevronDown />
         </p>
@@ -102,20 +138,14 @@ function Select({ options, defaultSelect }: SelectProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.9 }}
             transition={{ duration: 0.2 }}>
-            {options.map(item => {
+            {newOptions.map(item => {
               return (
-                <Option
-                  key={item.value}
-                  onClick={() =>
-                    handleSelect({
-                      option: item.option,
-                      value: item.value,
-                      icon: item.icon,
-                    })
-                  }>
-                  <div className="flex items-center gap-2">
-                    <OptionImg src={item.icon} alt={`icon of ${item.value}`} />
-                    <p>{item.option}</p>
+                <Option key={item.id} onClick={() => handleSelect(item)}>
+                  <div className=" flex items-center gap-2 text-base">
+                    <p className="text-2xl">
+                      <DisplayIcon iconName={item.name} />
+                    </p>
+                    <p>{item.name}</p>
                   </div>
                 </Option>
               );
@@ -127,13 +157,13 @@ function Select({ options, defaultSelect }: SelectProps) {
   );
 }
 
-function Label(option: OptionType) {
-  return (
-    <div className="flex items-center gap-2">
-      <OptionImg src={option?.icon} alt={`icon of ${option?.value}`} />
-      <p>{option?.option}</p>
-    </div>
-  );
-}
+// function Label(option: OptionType) {
+//   return (
+//     <div className="flex items-center gap-2">
+//       <OptionImg src={option?.icon} alt={`icon of ${option?.value}`} />
+//       <p>{option?.option}</p>
+//     </div>
+//   );
+// }
 
 export default Select;

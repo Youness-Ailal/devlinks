@@ -1,7 +1,33 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* 
+@font-face {
+  font-family: "tommy";
+  src: url("/src/assets/fonts/tommy-light.otf");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "tommy";
+  src: url("/src/assets/fonts/tommy.otf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "tommy";
+  src: url("/src/assets/fonts/tommy-mid.otf");
+  font-weight: 500 600;
+}
+@font-face {
+  font-family: "tommy";
+  src: url("/src/assets/fonts/tommy-bold.otf");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "tommy";
+  src: url("/src/assets/fonts/tommy-extrabold.otf");
+  font-weight: 800;
+} */
 
 :root {
   /* Grey */
@@ -16,7 +42,6 @@
   --color-grey-700: #374151;
   --color-grey-800: #1f2937;
   --color-grey-900: #111827;
-
 
   --color-white: #fff;
 
@@ -45,9 +70,9 @@
   --color-red-400: #f87171;
   --color-red-500: #ef4444;
 
-  --shadow-sm-red: 0 0 0.2rem 0.1rem rgb(248, 113, 113,0.1);
-  --shadow-md-red: 0 0 0.8rem 0.3rem rgb(248, 113, 113,0.18);
-  --shadow-lg-red: 0 0 1.4rem 0.5em rgb(248, 113, 113,0.25)
+  --shadow-sm-red: 0 0 0.2rem 0.1rem rgb(248, 113, 113, 0.1);
+  --shadow-md-red: 0 0 0.8rem 0.3rem rgb(248, 113, 113, 0.18);
+  --shadow-lg-red: 0 0 1.4rem 0.5em rgb(248, 113, 113, 0.25);
 
   --radius-tiny: 0.3rem;
   --radius-sm: 0.5rem;
@@ -55,7 +80,7 @@
   --radius-lg: 1rem;
 
   --padding-sm: 0.5rem 1.2rem;
-  --padding-base: 0.5rem 1.6rem;
+  --padding-base: 0.7rem 1.6rem;
   --padding-lg: 1rem 2rem;
 }
 
@@ -86,7 +111,7 @@ html {
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "DM Sans", sans-serif;
   transition: color 0.2s, background-color 0.2s;
   min-height: 100vh;
   line-height: 1.5;
@@ -106,7 +131,7 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--color-brand-800) ;
+  outline: 2px solid var(--color-brand-800);
   outline-offset: 2px;
 }
 
@@ -135,6 +160,9 @@ button:active {
   /* outline: 2px solid var(--color-brand-600);
   outline-offset: -1px; */
   scale: 0.99;
+}
+button:disabled:active {
+  scale: 1;
 }
 
 button:has(svg) {

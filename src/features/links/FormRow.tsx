@@ -2,14 +2,18 @@ import styled from "styled-components";
 import { HiMiniBars2 } from "react-icons/hi2";
 import Select from "@/components/Select";
 import LinkInput from "@/components/LinkInput";
-import { useAppSelector } from "@/store/hooks";
-import { ICON_URL } from "@/utils/constants";
+import socials from "@/data/Socials";
 
-import { OptionType } from "@/components/Select";
+// import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { UserLinkType, useLinksContext } from "@/context/LinksContext";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 type LinkRowType = {
   index: number;
-  linkData?: OptionType & { link: string };
+  id: string;
+  previewLink: UserLinkType;
+  formError: boolean;
+  changeFormError: (value: boolean) => void;
 };
 
 const StyledFormRow = styled.div`
@@ -22,27 +26,52 @@ const StyledFormRow = styled.div`
   border: 1px solid var(--color-brand-50);
 `;
 
-function FormRow({ linkData, index }: LinkRowType) {
-  const availableLinks = useAppSelector(
-    state => state.links.socialLinks
-  ).filter(item => item.status === "unused");
+function FormRow({
+  previewLink,
+  index,
+  id,
+  changeFormError,
+  formError,
+}: LinkRowType) {
+  const { removePreviewLink, updatePreviewLink } = useLinksContext();
 
-  const options = availableLinks.map(item => {
+  const socialDomain =
+    previewLink.name === "Whatsapp"
+      ? "wa"
+      : previewLink.name.toLocaleLowerCase();
+
+  const [link, setLink] = useState(previewLink.link || "");
+  const [error, setError] = useState("");
+  const urlRegex = new RegExp(
+    `^https?://(?:www\\.)?${socialDomain}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$`,
+    "ig"
+  );
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    const inputValue = e.target.value;
+    if (!urlRegex.test(inputValue)) {
+      changeFormError(true);
+      setError(`Enter a valid ${previewLink.name} URL.`);
+    } else {
+      setError("");
+      changeFormError(false);
+    }
+
+    setLink(inputValue);
+    updatePreviewLink({
+      id: previewLink.id,
+      newData: { ...previewLink, link: inputValue },
+    });
+  }
+
+  const options = socials.map(item => {
     return {
-      option: item.name,
-      value: item.name,
-      icon: `${ICON_URL}${item.id}.png`,
+      id: item.id,
+      name: item.name,
     };
   });
-
-  const defaulyValueInput = linkData?.link || "";
-  const defaultSelect = !linkData?.option
-    ? null
-    : {
-        option: linkData.option,
-        value: linkData.value,
-        icon: linkData.icon,
-      };
+  function handleRemove() {
+    removePreviewLink(id);
+  }
   return (
     <>
       <StyledFormRow>
@@ -50,6 +79,7 @@ function FormRow({ linkData, index }: LinkRowType) {
           <HiMiniBars2 />
           <p className="font-bold text-base ">Link #{index + 1}</p>
           <button
+            onClick={handleRemove}
             type="button"
             className="text-base ml-auto text-gray-600  hover:underline underline-offset-2 hover:text-red-400">
             Remove
@@ -58,11 +88,20 @@ function FormRow({ linkData, index }: LinkRowType) {
         <div className="flex flex-col gap-6 mt-4">
           <div className="space-y-2">
             <p className="text-[1rem] text-gray-500 font-medium">Platform</p>
-            <Select options={options} defaultSelect={defaultSelect} />
+            <Select options={options} previewLink={previewLink} />
           </div>
           <div className="space-y-2">
             <p className="text-[1rem] text-gray-500 font-medium">Link</p>
-            <LinkInput defaultValue={defaulyValueInput} />
+            <LinkInput
+              id={previewLink.id}
+              formError={formError}
+              error={error}
+              value={link}
+              onChange={handleInputChange}
+              onSubmit={e => console.log(e)}
+              // required
+              previewLink={previewLink}
+            />
           </div>
         </div>
       </StyledFormRow>

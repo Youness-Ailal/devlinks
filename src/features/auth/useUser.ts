@@ -1,8 +1,11 @@
 import { getCurrentUser } from "@/services/authApi";
+import { useQuery } from "@tanstack/react-query";
 
-async function useUser() {
-  const user = getCurrentUser();
-  return user;
+export function useUser() {
+  const { data: user, isLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: getCurrentUser,
+  });
+
+  return { user, isLoading, isAuthenticated: user?.role === "authenticated" };
 }
-
-export default useUser;

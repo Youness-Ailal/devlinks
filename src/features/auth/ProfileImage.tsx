@@ -4,8 +4,7 @@ import { IoImageOutline } from "react-icons/io5";
 import { HiPlus } from "react-icons/hi2";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { useAppDispatch } from "@/store/hooks";
-import { addPreviewAvatar } from "./userSlice";
+import { useProfile } from "@/context/ProfileContext";
 
 const Label = styled.label`
   height: 12rem;
@@ -45,7 +44,7 @@ const LabelWithImage = styled.label`
 
 function ProfileImage({ register, watch, avatar, isLoading }) {
   const [image, setImage] = useState<string | ArrayBuffer | null>(avatar);
-  const dispatch = useAppDispatch();
+  const { addPreviewAvatar, removePreviewAvatar } = useProfile();
 
   useEffect(() => {
     const file = watch("avatar");
@@ -55,23 +54,24 @@ function ProfileImage({ register, watch, avatar, isLoading }) {
 
       fileReader.onload = () => {
         setImage(fileReader.result);
-        dispatch(addPreviewAvatar(fileReader.result));
+        addPreviewAvatar(fileReader.result.toString());
       };
 
       fileReader.readAsDataURL(file[0]);
     }
+    return () => removePreviewAvatar();
   }, [watch("avatar")]);
 
   return (
-    <div className="flex gap-10 justify-between bg-gray-50  p-4 items-center border rounded-md border-violet-50">
+    <div className="flex gap-10 justify-between bg-gray-50 p-4 items-center border rounded-md border-violet-50 flex-wrap">
       <Text>Profile Picture</Text>
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-8 flex-wrap">
         <input
           disabled={isLoading}
           className="hidden"
           id="image"
           type="file"
-          accept="image/*"
+          accept="image/png, image/jpeg, image/bmp"
           {...register("avatar")}
         />
         {!image && (
@@ -105,7 +105,7 @@ function ProfileImage({ register, watch, avatar, isLoading }) {
           </LabelWithImage>
         )}
 
-        <p className="text-[1rem]  text-gray-500 mr-6 leading-[2]">
+        <p className="text-[1rem]  text-gray-500 mr-6 leading-[2] max-[1200px]:mr-1">
           Images must be below 1024x1024px.
           <br />
           Use PNG, JPG, or BMP format
