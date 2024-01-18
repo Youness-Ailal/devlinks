@@ -18,6 +18,7 @@ import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useUserNames } from "../links/useUserNames";
+import BannerImage from "./BannerImage";
 
 const StyledForm = styled.form`
   display: flex;
@@ -96,6 +97,12 @@ function ProfileDetails() {
             </Text>
           </div>
           <ProfileImage
+            isLoading={isLoading}
+            avatar={avatar_url}
+            watch={watch}
+            register={register}
+          />
+          <BannerImage
             isLoading={isLoading}
             avatar={avatar_url}
             watch={watch}

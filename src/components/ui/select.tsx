@@ -66,7 +66,7 @@ const Options = styled(motion.div)`
   }
 `;
 
-function Select({ options, previewLink }: SelectProps) {
+export default function Select({ options, previewLink }: SelectProps) {
   const [show, setShow] = useState(false);
   const [newOptions, setNewOptions] = useState(options);
   const { updatePreviewLink, previewLinks } = useLinksContext();
@@ -161,5 +161,3 @@ function Select({ options, previewLink }: SelectProps) {
 //     </div>
 //   );
 // }
-
-export default Select;

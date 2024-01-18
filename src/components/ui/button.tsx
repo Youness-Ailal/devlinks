@@ -27,7 +27,7 @@ const StyledButton = styled.button`
   }
 `;
 
-function Button({
+export default function Button({
   variant = "primary",
   children,
   className,
@@ -53,5 +53,3 @@ function Button({
     </StyledButton>
   );
 }
-
-export default Button;
