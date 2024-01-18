@@ -18,7 +18,7 @@ import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useUserNames } from "../links/useUserNames";
-import BannerImage from "./BannerImage";
+// import BannerImage from "./BannerImage";
 
 const StyledForm = styled.form`
   display: flex;
@@ -102,12 +102,12 @@ function ProfileDetails() {
             watch={watch}
             register={register}
           />
-          <BannerImage
+          {/* <BannerImage
             isLoading={isLoading}
             avatar={avatar_url}
             watch={watch}
             register={register}
-          />
+          /> */}
           <div className="flex flex-col gap-10 p-4 pt-8 bg-gray-50 border rounded-md border-violet-50">
             <div className="grid grid-cols-2 gap-x-6 gap-y-8 max-[1200px]:grid-cols-1 max-[1200px]:gap-y-6 max-[1000px]:grid-cols-2 max-[700px]:grid-cols-1">
               <Input
