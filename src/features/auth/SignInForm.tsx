@@ -73,7 +73,10 @@ function SignInForm() {
           Forgot password?
         </Link>
       </div>
-      <Button disabled={isLoading} className="!text-lg !mt-8">
+      <Button
+        isLoading={isLoading}
+        disabled={isLoading}
+        className="!text-lg !mt-8">
         Sign in
       </Button>
     </motion.form>

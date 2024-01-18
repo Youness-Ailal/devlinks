@@ -74,7 +74,7 @@ function UpdatePasswordForm() {
             value === getValues().password || "Password must match!",
         })}
       />
-      <Button disabled={isLoading} className="!text-lg !mt-8">
+      <Button isLoading={isLoading} disabled={isLoading} className="!text-lg !mt-8">
         Update Password
       </Button>
     </motion.form>

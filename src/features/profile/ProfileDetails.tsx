@@ -203,7 +203,10 @@ function ProfileDetails() {
           </div>
           <div className="border-t border-gray-300 flex flex-col items-end justify-end px-4 py-6 mt-auto max-[1000px]:block">
             <div>
-              <Button disabled={isLoading || !hasMadeChanges} variant="primary">
+              <Button
+                isLoading={isLoading}
+                disabled={isLoading || !hasMadeChanges}
+                variant="primary">
                 Update Profile
               </Button>
             </div>

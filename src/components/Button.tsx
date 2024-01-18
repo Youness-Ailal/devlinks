@@ -1,9 +1,11 @@
 import { ComponentProps } from "react";
 import styled from "styled-components";
 import { twMerge } from "tailwind-merge";
+import Spinner from "./Spinner";
 
 type ButtonProps = ComponentProps<"button"> & {
   variant?: "primary" | "outline" | "ghost";
+  isLoading?: boolean;
   className?: string;
 };
 const StyledButton = styled.button`
@@ -25,10 +27,38 @@ const StyledButton = styled.button`
   @media (max-width: 400px) {
     padding: var(--padding-sm);
   }
+  position: relative;
+  overflow: hidden;
+`;
+const SpinnerLoader = styled.span`
+  width: 30px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 5px solid var(--color-brand-200);
+  border-right-color: var(--color-brand-500);
+  animation: l2 0.5s infinite linear;
+
+  @keyframes l2 {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+`;
+const Loader = styled.span`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--color-brand-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default function Button({
   variant = "primary",
+  isLoading,
   children,
   className,
   ...props
@@ -49,7 +79,12 @@ export default function Button({
         ],
         className
       )}>
-      {children}{" "}
+      {isLoading && (
+        <Loader>
+          <SpinnerLoader />
+        </Loader>
+      )}
+      {children}
     </StyledButton>
   );
 }

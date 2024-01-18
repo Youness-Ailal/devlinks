@@ -41,7 +41,10 @@ function PasswordRecoverForm() {
           },
         })}
       />
-      <Button disabled={isLoading} className="!text-lg !mt-8">
+      <Button
+        isLoading={isLoading}
+        disabled={isLoading}
+        className="!text-lg !mt-8">
         Restore Password
       </Button>
     </motion.form>

@@ -86,7 +86,10 @@ function LinksForm() {
       </FormRows>
       <div className="border-t border-gray-300 flex justify-end px-4 py-6 mt-auto max-[1000px]:block">
         <div>
-          <Button disabled={isSaveDisabled || isLoading} variant="primary">
+          <Button
+            isLoading={isLoading}
+            disabled={isSaveDisabled || isLoading}
+            variant="primary">
             Save
           </Button>
         </div>

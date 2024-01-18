@@ -57,7 +57,10 @@ function SignUpForm() {
           Must be 6 charachters long
         </p>
       </div>
-      <Button disabled={isLoading} className="!text-lg !mt-8">
+      <Button
+        isLoading={isLoading}
+        disabled={isLoading}
+        className="!text-lg !mt-8">
         Create account
       </Button>
     </motion.form>
