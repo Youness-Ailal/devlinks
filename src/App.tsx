@@ -17,7 +17,7 @@ import SignUp from "./pages/Signup";
 import UpdatePassword from "./pages/UpdatePassword";
 import ResetPassword from "./pages/ResetPassword";
 import DevLink from "./pages/DevLink";
-import SpinnerScreen from "./components/ui/SpinnerScreen";
+import SpinnerScreen from "./components/SpinnerScreen";
 
 //
 const queryClient = new QueryClient({

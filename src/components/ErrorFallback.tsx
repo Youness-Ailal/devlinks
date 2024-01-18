@@ -1,6 +1,5 @@
 // @ts-ignore
-
-import Button from "./ui/Button";
+import Button from "./Button";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (

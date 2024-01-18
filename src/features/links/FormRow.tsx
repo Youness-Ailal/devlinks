@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { HiMiniBars2 } from "react-icons/hi2";
 // @ts-ignore
-import Select from "@/components/ui/Select";
-import LinkInput from "@/components/ui/LinkInput";
+import Select from "@/components/Select";
+import LinkInput from "@/components/LinkInput";
 import socials from "@/data/Socials";
 
 // import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";

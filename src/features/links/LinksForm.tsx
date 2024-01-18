@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import FormRow from "./FormRow";
 // @ts-ignore
-import Button from "@/components/ui/Button";
+import Button from "@/components/Button";
 import { UserLinkType, useLinksContext } from "@/context/LinksContext";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";

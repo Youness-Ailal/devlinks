@@ -1,5 +1,5 @@
 import emptyFolder from "@/assets/empty-folder.svg";
-import Text from "@/components/ui/Text";
+import Text from "@/components/Text";
 
 function EmptyLinks() {
   return (

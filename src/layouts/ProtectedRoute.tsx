@@ -1,4 +1,4 @@
-import SpinnerScreen from "@/components/ui/SpinnerScreen";
+import SpinnerScreen from "@/components/SpinnerScreen";
 import { useUser } from "@/features/auth/useUser";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";

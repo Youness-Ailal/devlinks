@@ -1,5 +1,5 @@
 import Header from "@/components/Nav";
-import Spinner from "@/components/ui/Spinner";
+import Spinner from "@/components/Spinner";
 import SocialLinksProvider from "@/context/LinksContext";
 import ProfileProvider from "@/context/ProfileContext";
 import { useUser } from "@/features/auth/useUser";
@@ -49,8 +49,7 @@ function AppLayout() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 1 }}
-          transition={{ duration: 0.2 }}
-          >
+          transition={{ duration: 0.2 }}>
           <Header />
           <Main>{Content}</Main>
         </StyledLayout>

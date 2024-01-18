@@ -1,4 +1,4 @@
-import Text from "@/components/ui/Text";
+import Text from "@/components/Text";
 import styled from "styled-components";
 import { IoImageOutline } from "react-icons/io5";
 import { HiPlus } from "react-icons/hi2";

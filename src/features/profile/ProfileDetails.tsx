@@ -1,18 +1,18 @@
-import Container from "@/components/ui/Container";
+import Container from "@/components/Container";
 import Header from "@/components/Header";
-import Text from "@/components/ui/Text";
+import Text from "@/components/Text";
 // @ts-ignore
-import Button from "@/components/ui/Button";
+import Button from "@/components/Button";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import ProfileImage from "./ProfileImage";
-import Input from "@/components/ui/Input";
+import Input from "@/components/Input";
 import { useUser } from "../auth/useUser";
 import { useUpdateUser } from "../auth/useUpdateUser";
 import { IoIosLogOut } from "react-icons/io";
 import { useSignOut } from "../auth/useSignOut";
 import { useLinks } from "../links/useLinks";
-import Spinner from "@/components/ui/Spinner";
+import Spinner from "@/components/Spinner";
 import { IoCopyOutline } from "react-icons/io5";
 import { DEV_URL } from "@/utils/constants";
 import toast from "react-hot-toast";

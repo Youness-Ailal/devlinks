@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 // import { FcGoogle } from "react-icons/fc";
 // import { useSignInWithGoogle } from "./useGoogleAuth";
 import { useUser } from "./useUser";
-import Spinner from "@/components/ui/Spinner";
+import Spinner from "@/components/Spinner";
 import { motion } from "framer-motion";
 
 const ScreenContainer = styled(motion.div)`

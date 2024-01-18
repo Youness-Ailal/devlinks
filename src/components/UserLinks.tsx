@@ -4,8 +4,8 @@ import { FaArrowRight } from "react-icons/fa6";
 import { formatEmail, formatName } from "@/utils/helpers";
 import styled from "styled-components";
 import defaultAvatar from "/avatar.svg";
-import Spinner from "./ui/Spinner";
-import DisplayIcon from "./ui/DisplayIcon";
+import Spinner from "./Spinner";
+import DisplayIcon from "./DisplayIcon";
 import { useParams } from "react-router-dom";
 import { useUserLinks } from "@/features/links/useUserLinks";
 const UserImage = styled.div`

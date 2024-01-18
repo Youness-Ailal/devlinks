@@ -1,13 +1,13 @@
 // @ts-ignore
-import Button from "@/components/ui/Button";
-import Container from "@/components/ui/Container";
+import Button from "@/components/Button";
+import Container from "@/components/Container";
 import Header from "@/components/Header";
-import Text from "@/components/ui/Text";
+import Text from "@/components/Text";
 import { HiPlus } from "react-icons/hi2";
 import LinksForm from "./LinksForm";
 import EmptyLinks from "./EmptyLinks";
 import { useLinksContext } from "@/context/LinksContext";
-import Spinner from "@/components/ui/Spinner";
+import Spinner from "@/components/Spinner";
 import socials from "@/data/Socials";
 import toast from "react-hot-toast";
 import { AnimatePresence, motion } from "framer-motion";

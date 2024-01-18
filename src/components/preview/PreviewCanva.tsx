@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils";
 import { FaArrowRight } from "react-icons/fa6";
 import { formatEmail, formatName } from "@/utils/helpers";
 import styled from "styled-components";
-import DisplayIcon from "../ui/DisplayIcon";
-import Spinner from "../ui/Spinner";
+import DisplayIcon from "../DisplayIcon";
+import Spinner from "../Spinner";
 import defaultAvatar from "/avatar.svg";
 
 function PreviewCanva() {

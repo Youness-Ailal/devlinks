@@ -1,8 +1,8 @@
 import { useLinks } from "@/features/links/useLinks";
 // @ts-ignore
-import Button from "../ui/Button";
-import ButtonLink from "../ui/ButtonLink";
-import Container from "../ui/Container";
+import Button from "../Button";
+import ButtonLink from "../ButtonLink";
+import Container from "../Container";
 import toast from "react-hot-toast";
 import { DEV_URL } from "@/utils/constants";
 function PreviewNav() {

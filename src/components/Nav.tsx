@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Container from "./ui/Container";
+import Container from "./Container";
 import logo from "/logo.svg";
-import ButtonLink from "./ui/ButtonLink";
+import ButtonLink from "./ButtonLink";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { RxDashboard } from "react-icons/rx";
 import styled from "styled-components";

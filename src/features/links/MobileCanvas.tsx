@@ -1,4 +1,4 @@
-import Container from "@/components/ui/Container";
+import Container from "@/components/Container";
 import styled from "styled-components";
 import canvas from "../../assets/mobile.svg";
 import { cn } from "@/lib/utils";
@@ -7,7 +7,7 @@ import { useUser } from "../auth/useUser";
 import { useProfile } from "@/context/ProfileContext";
 import { useLinksContext } from "@/context/LinksContext";
 import { colors } from "@/data/Colors";
-import DisplayIcon from "@/components/ui/DisplayIcon";
+import DisplayIcon from "@/components/DisplayIcon";
 import { FaArrowRight } from "react-icons/fa6";
 import { formatEmail, formatName } from "@/utils/helpers";
 import { Reorder } from "framer-motion";
