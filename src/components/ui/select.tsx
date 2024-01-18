@@ -95,6 +95,7 @@ export default function Select({ options, previewLink }: SelectProps) {
         // ...previewLink,
       },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [option]);
 
   const ref = useOutsideClick(closeSelect);
