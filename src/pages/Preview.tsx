@@ -2,7 +2,7 @@ import PreviewCanva from "@/components/preview/PreviewCanva";
 import PreviewNav from "@/components/preview/PreviewNav";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import bg from "/bg3.jpg";
+import bg from "/bg1.jpg";
 
 const Header = styled.div`
   height: 24rem;
@@ -11,6 +11,7 @@ const Header = styled.div`
 
   background-size: cover;
   background-position: center;
+  background-color: var(--color-brand-600);
 `;
 
 function Preview() {
