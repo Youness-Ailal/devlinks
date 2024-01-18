@@ -23,8 +23,8 @@ const FormRows = styled(Reorder.Group)`
   height: 29rem;
   overflow-y: scroll;
   &::-webkit-scrollbar {
-    width: 0.5rem;
-    /* display: none; */
+    /* width: 0.5rem; */
+    display: none;
   }
 `;
 
