@@ -1,14 +1,14 @@
 import Header from "@/components/Nav";
-import Spinner from "@/components/Spinner";
-import { useLinksContext } from "@/context/LinksContext";
-// import { useLogin } from "@/features/auth/useLogin";
+import Spinner from "@/components/ui/Spinner";
+import SocialLinksProvider from "@/context/LinksContext";
+import ProfileProvider from "@/context/ProfileContext";
 import { useUser } from "@/features/auth/useUser";
-import { useLinks } from "@/features/links/useLinks";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
-const StyledLayout = styled.div`
+const StyledLayout = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,13 +30,7 @@ const Main = styled.main`
 `;
 
 function AppLayout() {
-  // const { login } = useLogin();
-
   const { isLoading } = useUser();
-
-  // useEffect(() => {
-  //   login({ email: "test@gmail.com", password: "test123" });
-  // }, []);
 
   let Content: ReactNode;
   if (isLoading) {
@@ -49,10 +43,19 @@ function AppLayout() {
     Content = <Outlet />;
   }
   return (
-    <StyledLayout>
-      <Header />
-      <Main>{Content}</Main>
-    </StyledLayout>
+    <SocialLinksProvider>
+      <ProfileProvider>
+        <StyledLayout
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          >
+          <Header />
+          <Main>{Content}</Main>
+        </StyledLayout>
+      </ProfileProvider>
+    </SocialLinksProvider>
   );
 }
 

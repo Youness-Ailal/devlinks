@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# tsx files
+_AuthContainer-v1.tsx
+_useInsertLinksRow.ts
+_useGoogleAuth.ts
+_LinksContext-v1.tsx

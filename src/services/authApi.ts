@@ -6,7 +6,8 @@ type loginCredentilasType = {
   password: string;
 };
 
-export async function signIn({ email, password }: loginCredentilasType) {
+// Log in
+export async function signInApi({ email, password }: loginCredentilasType) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -15,15 +16,91 @@ export async function signIn({ email, password }: loginCredentilasType) {
     throw new Error(error.message);
   }
 
-  return data;
+  return data?.user;
+}
+export async function signUpApi({ email, password }: loginCredentilasType) {
+  //1. sign up user
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  //2. insert new links row
+  const { error: linksError } = await supabase.from("links").insert({
+    user_id: data.user.id,
+    email: data.user.email,
+    links_list: [],
+  });
+  if (linksError) {
+    throw new Error(linksError.message);
+  }
+
+  //3 set hasLinksRow to true
+  const { data: updateData, error: updateError } =
+    await supabase.auth.updateUser({
+      data: {
+        hasLinks: "true",
+      },
+    });
+  if (updateError) {
+    throw new Error(updateError.message);
+  }
+
+  return { user: updateData?.user };
 }
 
+// Log in with google
+export async function signInWithGoogle() {
+  //1 signinuser with google
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+  });
+  if (error) {
+    throw new Error(error.message);
+  }
+  const { data: session } = await supabase.auth.getSession();
+  if (!session.session) return null;
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError) throw new Error(userError.message);
+
+  return;
+  let firstName: string;
+  let lastName: string;
+  let avatar: string;
+  if (userData.user.user_metadata?.full_name) {
+    const FullName = userData.user.user_metadata?.full_name;
+    firstName = FullName.toString().split(" ")[0];
+    lastName = FullName.toString().split(" ")[1];
+  }
+  if (userData.user.user_metadata?.avatar_url) {
+    avatar = userData.user.user_metadata?.avatar_url;
+  }
+  // 2. update details
+  const { data: updateData, error: updateError } =
+    await supabase.auth.updateUser({
+      data: {
+        firstName,
+        lastName,
+        avatar,
+      },
+    });
+  if (updateError) throw new Error(updateError.message);
+
+  return updateData?.user;
+}
+
+// Log out
 export async function signOut() {
   const { error } = await supabase.auth.signOut();
 
   if (error) throw new Error(error.message);
 }
 
+// Get user details
 export async function getCurrentUser() {
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) return null;
@@ -36,27 +113,41 @@ export async function getCurrentUser() {
 export type UserDataType = {
   firstName?: string;
   lastName?: string;
+  id?: string;
   avatar?: File[] | undefined;
 };
+
+// update user details
 export async function updateUser({
   firstName,
   lastName,
+  id,
   avatar,
 }: UserDataType) {
-  // 1. update first name and/or last name
-
-  let updateData: { data: UserDataType };
+  //  update first name and/or last name
+  let updateData: { data: { full_name?: string; avatar_url?: string } };
 
   if (firstName && lastName) {
-    updateData = { data: { firstName, lastName } };
+    updateData = { data: { full_name: `${firstName} ${lastName}` } };
   }
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+  if (userError) throw new Error(userError.message);
+  const userId = userData.user.id;
+
   const { data, error } = await supabase.auth.updateUser(updateData);
+  await supabase
+    .from("links")
+    .update({
+      full_name: `${firstName} ${lastName}`,
+      email: userData.user.email,
+      id: id.toLocaleLowerCase(),
+    })
+    .eq("user_id", userId);
 
   if (error) throw new Error(error.message);
   if (!avatar?.length) return data;
 
-  // 2. handleFile
-
+  //  handleFile
   const file = avatar[0];
   const filesizeInMb = file.size / 1024 ** 2;
 
@@ -69,12 +160,36 @@ export async function updateUser({
     .upload(fileName, file);
 
   if (storageError) throw new Error(storageError.message);
-  const avatarLink = `${SUPABASE_URL}/storage/v1/object/public/avatars/${fileName}`;
+  const avatarUrl = `${SUPABASE_URL}/storage/v1/object/public/avatars/${fileName}`;
   const { data: updatedData, error: errorFile } =
-    await supabase.auth.updateUser({
-      data: { data: { avatar: avatarLink } },
-    });
+    await supabase.auth.updateUser({ data: { avatar_url: avatarUrl } });
+  await supabase
+    .from("links")
+    .update({
+      avatar_url: avatarUrl,
+    })
+    .eq("user_id", userId);
   if (errorFile) throw new Error(errorFile.message);
 
   return updatedData?.user;
+}
+
+// password reset link
+export async function getResetPassLink(email: string) {
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: "http://localhost:5173/update-password",
+  });
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+// update password
+export async function updatePassword(password: string) {
+  const { data, error } = await supabase.auth.updateUser({
+    password,
+  });
+
+  if (error) throw new Error(error.message);
+  return data;
 }

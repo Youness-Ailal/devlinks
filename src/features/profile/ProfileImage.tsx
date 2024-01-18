@@ -1,4 +1,4 @@
-import Text from "@/components/Text";
+import Text from "@/components/ui/Text";
 import styled from "styled-components";
 import { IoImageOutline } from "react-icons/io5";
 import { HiPlus } from "react-icons/hi2";
@@ -43,7 +43,9 @@ const LabelWithImage = styled.label`
 `;
 
 function ProfileImage({ register, watch, avatar, isLoading }) {
-  const [image, setImage] = useState<string | ArrayBuffer | null>(avatar);
+  const [image, setImage] = useState<string | ArrayBuffer | null | undefined>(
+    avatar
+  );
   const { addPreviewAvatar, removePreviewAvatar } = useProfile();
 
   useEffect(() => {
@@ -71,7 +73,7 @@ function ProfileImage({ register, watch, avatar, isLoading }) {
           className="hidden"
           id="image"
           type="file"
-          accept="image/png, image/jpeg, image/bmp"
+          accept="image/png, image/jpeg, image/bmp, image/webp "
           {...register("avatar")}
         />
         {!image && (
@@ -106,9 +108,9 @@ function ProfileImage({ register, watch, avatar, isLoading }) {
         )}
 
         <p className="text-[1rem]  text-gray-500 mr-6 leading-[2] max-[1200px]:mr-1">
-          Images must be below 1024x1024px.
+          Images must be below 2MB size.
           <br />
-          Use PNG, JPG, or BMP format
+          Use png, jpg, or webp format
         </p>
       </div>
     </div>

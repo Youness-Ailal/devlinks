@@ -1,5 +1,5 @@
-import { useLinks } from "@/features/links/useLinks";
-import { createContext, useContext, useEffect, useReducer } from "react";
+import { useLinks } from "@/features/links/useLinks.ts";
+import { createContext, useContext, useEffect, useState } from "react";
 export type UserLinkType = {
   id: string;
   name: string;
@@ -11,14 +11,12 @@ type LinksState = {
   isLoading: boolean;
 };
 
-const intialState: LinksState = {
-  previewLinks: [],
-  isLoading: false,
-};
-
 type ProfileContextValue = LinksState & {
   addPreviewLink: (socialLink: UserLinkType) => void;
   removePreviewLink: (id: string) => void;
+  resetPreviewLinks: () => void;
+  // setPreviewLinks: Dispatch<SetStateAction<UserLinkType[]>>;
+  setPreviewLinks: (newOrder: unknown) => void;
   updatePreviewLink: ({
     id,
     newData,
@@ -28,74 +26,33 @@ type ProfileContextValue = LinksState & {
   }) => void;
 };
 
-type ActionType =
-  | {
-      type: "previewLink/add";
-      payload: UserLinkType;
-    }
-  | {
-      type: "previewLink/remove";
-      payload: string;
-    }
-  | {
-      type: "previewLink/edit";
-      payload: { id: string; newData: UserLinkType };
-    }
-  | {
-      type: "previewLinks/update";
-      payload: UserLinkType[];
-    };
-
 const SocialLinksContext = createContext<ProfileContextValue | null>(null);
 
-function reducer(state: LinksState, action: ActionType): LinksState {
-  switch (action.type) {
-    case "previewLink/add":
-      return {
-        ...state,
-        previewLinks: [action.payload, ...state.previewLinks],
-      };
-    case "previewLink/remove":
-      return {
-        ...state,
-        previewLinks: [
-          ...state.previewLinks.filter(link => link.id !== action.payload),
-        ],
-      };
-    case "previewLink/edit":
-      return {
-        ...state,
-        previewLinks: [
-          ...state.previewLinks.map(item => {
-            if (item.id === action.payload.id) {
-              return action.payload.newData;
-            }
-            return item;
-          }),
-        ],
-      };
-    case "previewLinks/update":
-      return { ...state, previewLinks: action.payload };
-
-    default:
-      return state;
-  }
-}
-
 export default function SocialLinksProvider({ children }) {
-  const { links, isLoading } = useLinks();
+  const { links, isLoading: isLoading } = useLinks();
+  const { links_list } = links || {};
 
-  const [linksState, dispatch] = useReducer(reducer, intialState);
-  const { previewLinks } = linksState;
+  const [previewLinks, setPreviewLinks] = useState<UserLinkType[]>([]);
+
+  useEffect(() => {
+    if (links_list) {
+      const linkList = links_list.map(item => ({
+        id: item.id,
+        name: item.name,
+        link: item.link,
+      }));
+      setPreviewLinks(linkList);
+    }
+  }, [links]);
 
   function addPreviewLink(socialLink: UserLinkType) {
-    dispatch({ type: "previewLink/add", payload: socialLink });
+    setPreviewLinks(prev => [socialLink, ...prev]);
   }
   function removePreviewLink(id: string) {
-    dispatch({ type: "previewLink/remove", payload: id });
+    setPreviewLinks(prev => [...prev.filter(link => link.id !== id)]);
   }
-  function updatePreviewLinks(data: UserLinkType[]) {
-    dispatch({ type: "previewLinks/update", payload: data });
+  function resetPreviewLinks() {
+    setPreviewLinks([]);
   }
 
   function updatePreviewLink({
@@ -105,26 +62,21 @@ export default function SocialLinksProvider({ children }) {
     id: string;
     newData: UserLinkType;
   }) {
-    dispatch({ type: "previewLink/edit", payload: { id, newData } });
+    setPreviewLinks(prev =>
+      [...prev].map(item => {
+        if (item.id === id) return newData;
+        return item;
+      })
+    );
   }
-  const linksApi = links && JSON.parse(links);
-
-  useEffect(() => {
-    if (linksApi) {
-      const parsedLinks = linksApi.map(item => ({
-        id: item.id,
-        name: item.name,
-        link: item.link,
-      }));
-      updatePreviewLinks(parsedLinks);
-    }
-  }, [links]);
 
   const contextValue: ProfileContextValue = {
     previewLinks,
     addPreviewLink,
     removePreviewLink,
     updatePreviewLink,
+    resetPreviewLinks,
+    setPreviewLinks,
     isLoading,
   };
   return (

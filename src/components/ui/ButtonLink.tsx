@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Link, NavLink, NavLinkProps, type To } from "react-router-dom";
+import { Link, NavLink, type To } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledNavLink = styled(NavLink)`
@@ -37,6 +37,9 @@ const StyledLink = styled(Link)`
   border-radius: var(--radius-sm);
   &:hover {
     background-color: var(--color-brand-50);
+  }
+  @media (max-width: 400px) {
+    padding: var(--padding-sm);
   }
 `;
 

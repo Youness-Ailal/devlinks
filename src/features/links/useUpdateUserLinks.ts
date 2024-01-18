@@ -2,7 +2,7 @@ import { updateUserLinks } from "@/services/linksApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-export function useUpdateLinks() {
+export function useUpdateUserLinks() {
   const queryClient = useQueryClient();
   const { mutate: updateLinks, status } = useMutation({
     mutationFn: updateUserLinks,

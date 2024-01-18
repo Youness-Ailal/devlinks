@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import FormRow from "./FormRow";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import { UserLinkType, useLinksContext } from "@/context/LinksContext";
-import { FormEvent, useEffect, useId, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { useUpdateLinks } from "./useUpdateLinks";
+import { useUpdateUserLinks } from "./useUpdateUserLinks";
 import { useUser } from "../auth/useUser";
+import { Reorder } from "framer-motion";
 
 const StyledForm = styled.form`
   display: flex;
@@ -13,24 +14,24 @@ const StyledForm = styled.form`
   gap: 1rem;
   height: 100%;
 `;
-const FormRows = styled.div`
+const FormRows = styled(Reorder.Group)`
   margin-bottom: -1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-height: 29rem;
-  overflow: scroll;
+  height: 29rem;
+  overflow-y: scroll;
   &::-webkit-scrollbar {
-    display: none;
+    width: 0.5rem;
+    /* display: none; */
   }
 `;
 
 function LinksForm() {
-  const { previewLinks } = useLinksContext();
-  const {
-    user: { id: userId },
-  } = useUser();
-  const { updateLinks, status } = useUpdateLinks();
+  const { previewLinks, setPreviewLinks } = useLinksContext();
+  const { user } = useUser() || {};
+  const { id: userId } = user || {};
+  const { updateLinks, status } = useUpdateUserLinks();
   const isLoading = status === "pending";
   const [formData, setFormData] = useState<UserLinkType[]>(previewLinks);
   const [formError, setFormError] = useState(false);
@@ -63,15 +64,20 @@ function LinksForm() {
   }
   return (
     <StyledForm onSubmit={handleSubmit} ref={formRef}>
-      <FormRows>
+      <FormRows
+        layoutScroll
+        style={{ overflowY: "scroll" }}
+        axis="y"
+        values={previewLinks}
+        onReorder={setPreviewLinks}>
         {previewLinks.map((item, index) => {
           return (
             <FormRow
               formError={formError}
               changeFormError={changeFormError}
               previewLink={item}
-              id={item.id}
-              key={item.id}
+              id={item?.id}
+              key={item?.id}
               index={index}
             />
           );

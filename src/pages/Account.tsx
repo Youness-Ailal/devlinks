@@ -1,5 +1,5 @@
 import MobileCanvas from "../features/links/MobileCanvas";
-import ProfileDetails from "@/features/auth/ProfileDetails";
+import ProfileDetails from "@/features/profile/ProfileDetails";
 function Account() {
   return (
     <>

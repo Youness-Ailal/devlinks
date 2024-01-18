@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import Container from "./Container";
+import Container from "./ui/Container";
 import logo from "/logo.svg";
-import ButtonLink from "./ButtonLink";
+import ButtonLink from "./ui/ButtonLink";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { RxDashboard } from "react-icons/rx";
 import styled from "styled-components";
-import { MdContentCopy } from "react-icons/md";
 import { HiEye } from "react-icons/hi2";
 
 const NavLinks = styled.div`
@@ -33,7 +32,7 @@ function Header() {
 
         <ButtonLink to="/account">
           <FaRegCircleUser />
-          <p className="max-[700px]:hidden">Profile Details</p>
+          <p className="max-[700px]:hidden">Profile</p>
         </ButtonLink>
       </NavLinks>
       <div className="flex items-center  gap-1">

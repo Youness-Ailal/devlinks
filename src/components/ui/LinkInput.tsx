@@ -1,6 +1,7 @@
 import { UserLinkType } from "@/context/LinksContext";
 import socials from "@/data/Socials";
 import { ComponentProps, forwardRef } from "react";
+import { HiLink } from "react-icons/hi2";
 import styled from "styled-components";
 
 type InputTypes = ComponentProps<"input"> & {
@@ -12,25 +13,27 @@ type InputTypes = ComponentProps<"input"> & {
 };
 
 const Input = styled.input`
+  --border: 2px;
   width: 100%;
   background-color: var(--color-white);
-  border: 1px solid var(--color-grey-300);
+  border: var(--border) solid var(--color-grey-300);
   height: 3rem;
   border-radius: var(--radius-sm);
   font-size: 1rem;
   padding: 1rem;
+  padding-left: 2.6rem;
   transition: all 0.2s;
   &.error {
-    border: 1px solid var(--color-red-400);
+    border: var(--border) solid var(--color-red-400);
     box-shadow: var(--shadow-md-red);
     &:focus {
-      border: 1px solid var(--color-red-500);
+      border: var(--border) solid var(--color-red-500);
       box-shadow: var(--shadow-md-red);
     }
   }
   &:focus {
     outline: none;
-    border: 1px solid var(--color-brand-500);
+    border: var(--border) solid var(--color-brand-500);
     box-shadow: var(--shadow-md);
   }
 `;
@@ -51,7 +54,7 @@ const LinkInput = forwardRef<HTMLInputElement, InputTypes>(function LinkInput(
   return (
     <div className="relative">
       <Input
-        className={`${error && formError ? "error" : null}`}
+        className={`${error && formError ? "error" : null} `}
         placeholder={socialInfo.label}
         ref={ref}
         {...props}
@@ -59,6 +62,9 @@ const LinkInput = forwardRef<HTMLInputElement, InputTypes>(function LinkInput(
         type="text"
       />
       {error && formError ? <Span>{error}</Span> : null}
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl pointer-events-none">
+        <HiLink />
+      </div>
     </div>
   );
 });

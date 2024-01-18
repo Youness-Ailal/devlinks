@@ -1,4 +1,4 @@
-import Container from "@/components/Container";
+import Container from "@/components/ui/Container";
 import styled from "styled-components";
 import canvas from "../../assets/mobile.svg";
 import { cn } from "@/lib/utils";
@@ -7,8 +7,10 @@ import { useUser } from "../auth/useUser";
 import { useProfile } from "@/context/ProfileContext";
 import { useLinksContext } from "@/context/LinksContext";
 import { colors } from "@/data/Colors";
-import DisplayIcon from "@/components/DisplayIcon";
+import DisplayIcon from "@/components/ui/DisplayIcon";
 import { FaArrowRight } from "react-icons/fa6";
+import { formatEmail, formatName } from "@/utils/helpers";
+import { Reorder } from "framer-motion";
 
 const StyledCanvas = styled.div`
   height: 42rem;
@@ -78,7 +80,7 @@ const EmailSkeleton = styled.div`
   background-color: var(--color-grey-200);
 `;
 
-const CanvaLinks = styled.div`
+const CanvaLinks = styled(Reorder.Group)`
   position: absolute;
   width: 18rem;
   --height: 3rem;
@@ -102,7 +104,7 @@ const CanvaLinkSkeleton = styled.div`
   background-color: var(--color-grey-200);
   border-radius: var(--radius-tiny);
 `;
-const CanvaLink = styled.div`
+const CanvaLink = styled(Reorder.Item)`
   width: 100%;
   height: var(--height);
   border-radius: var(--radius-tiny);
@@ -110,10 +112,14 @@ const CanvaLink = styled.div`
   gap: 1rem;
   align-items: center;
   padding: 1rem;
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
 `;
 
 function MobileCanvas() {
-  const { previewLinks } = useLinksContext();
+  const { previewLinks, isLoading, setPreviewLinks } = useLinksContext() || {};
 
   const [remainingLinks, setRemainingLinks] = useState(
     5 - previewLinks.length || 5
@@ -123,30 +129,18 @@ function MobileCanvas() {
   }, [previewLinks.length]);
 
   const { previewAvatar } = useProfile();
-  const {
-    user: {
-      email,
-      user_metadata: {
-        firstName,
-        lastName,
-        data: { avatar },
-      },
-    },
-  } = useUser();
+  const { user } = useUser() || {};
+  const { email, user_metadata } = user || {};
+  const { full_name: fullName, avatar_url } = user_metadata || {};
 
-  const fName = firstName.length > 10 ? firstName.at(0).concat(".") : firstName;
-  let lName = lastName.length > 10 ? lastName.at(0).concat(".") : lastName;
-  const emailAddress =
-    email.length > 20
-      ? `${email.slice(0, 3)}...${email.slice(email.indexOf("@"))}`
-      : email;
+  const { fName, lName } = formatName(fullName);
+  const emailAddress = formatEmail(email);
 
-  if (fName.concat(lName).length > 18) lName = lastName.at(0).concat(".");
   let ImageContent: ReactNode = <ImageSkeleton />;
 
-  if (avatar) {
+  if (avatar_url) {
     ImageContent = (
-      <ProfileImage style={{ backgroundImage: `url(${avatar})` }} />
+      <ProfileImage style={{ backgroundImage: `url(${avatar_url})` }} />
     );
   }
   if (previewAvatar) {
@@ -159,13 +153,13 @@ function MobileCanvas() {
       <StyledCanvas>
         <Image
           className={cn({
-            "border-4 border-violet-500": previewAvatar || avatar,
+            "border-4 border-violet-500": previewAvatar || avatar_url,
           })}>
           {ImageContent}
         </Image>
 
         <Name>
-          {firstName && lastName ? (
+          {fullName ? (
             <p className="text-center font-semibold text-gray-700 text-[1.3rem] ">
               {fName} {lName}
             </p>
@@ -174,26 +168,30 @@ function MobileCanvas() {
           )}
         </Name>
         <Email>
-          {email && firstName && lastName ? (
+          {email && fullName ? (
             <p className="text-[0.9rem] text-slate-700">{emailAddress}</p>
           ) : (
             <EmailSkeleton />
           )}
         </Email>
-        <CanvaLinks>
-          {previewLinks.map(item => (
-            <CanvaLink key={item.id} className={cn(`${colors[item.name]}`)}>
-              <p className="text-gray-50 max-[1200px]:text-xl">
-                <DisplayIcon iconName={item.name} />
-              </p>
-              <p className="text-base text-gray-100 font-medium max-[1200px]:text-sm">
-                {item.name}
-              </p>
-              <p className="ml-auto text-sm opacity-90 text-gray-100 max-[1200px]:text-sm">
-                <FaArrowRight />
-              </p>
-            </CanvaLink>
-          ))}
+        <CanvaLinks axis="y" values={previewLinks} onReorder={setPreviewLinks}>
+          {!isLoading &&
+            previewLinks.map(item => (
+              <CanvaLink
+                value={item}
+                key={item.id}
+                className={cn(`${colors[item.name]}`)}>
+                <p className="text-gray-50 max-[1200px]:text-xl">
+                  <DisplayIcon iconName={item.name} />
+                </p>
+                <p className="text-base text-gray-100 font-medium max-[1200px]:text-sm">
+                  {item.name}
+                </p>
+                <p className="ml-auto text-sm opacity-90 text-gray-100 max-[1200px]:text-sm">
+                  <FaArrowRight />
+                </p>
+              </CanvaLink>
+            ))}
           {Array.from({ length: remainingLinks }).map((_, index) => {
             return <CanvaLinkSkeleton key={index} />;
           })}

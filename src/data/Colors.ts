@@ -1,6 +1,7 @@
 export const colors = {
   Facebook: "bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700",
-  Whatsapp: "bg-gradient-to-r from-green-500 to-green-600",
+  Whatsapp: "bg-gradient-to-l from-emerald-500 to-green-500",
+  Spotify: "bg-gradient-to-l from-green-500 to-green-600",
   YouTube: "bg-gradient-to-b from-red-500 to-red-600",
   Twitter: "bg-gradient-to-r from-sky-500 to-sky-600",
   Instagram: "bg-gradient-to-bl from-fuchsia-500 to-orange-400",

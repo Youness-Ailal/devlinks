@@ -6,13 +6,14 @@ const StyledContainer = styled.div`
   background-color: var(--color-grey-0);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-brand-50);
+  overflow-y: hidden;
 `;
 type ContainerProps = ComponentProps<"div"> & {
   as?: string;
 };
 
-function Container({ as, ...props }: ContainerProps) {
-  return <StyledContainer as={as || "div"} {...props} />;
+function Container({ as = "div", ...props }: ContainerProps) {
+  return <StyledContainer as={as} {...props} />;
 }
 
 export default Container;
