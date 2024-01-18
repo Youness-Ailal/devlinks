@@ -6,7 +6,7 @@ import { Suspense, lazy } from "react";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 import ProfileProvider from "./context/ProfileContext";
 import SocialLinksProvider from "./context/LinksContext";
-const AppLayout = lazy(() => import("./layouts/AppLayout"));
+import("./layouts/AppLayout");
 
 //pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));
