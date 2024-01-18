@@ -1,5 +1,5 @@
 import { UserLinkType } from "@/context/LinksContext";
-import supabase from "./supabase";
+import supabase from "./supabase.ts";
 
 export type updateLinksType = {
   userId: string;

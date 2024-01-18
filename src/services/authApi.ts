@@ -1,5 +1,5 @@
 import supabase from "./supabase";
-import { SUPABASE_URL } from "./supabase";
+import { SUPABASE_URL } from "./supabase.ts";
 
 type loginCredentilasType = {
   email: string;
