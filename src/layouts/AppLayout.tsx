@@ -6,9 +6,8 @@ import { useUser } from "@/features/auth/useUser";
 import { type ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import { motion } from "framer-motion";
 
-const StyledLayout = styled(motion.div)`
+const StyledLayout = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,11 +44,7 @@ function AppLayout() {
   return (
     <SocialLinksProvider>
       <ProfileProvider>
-        <StyledLayout
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 1 }}
-          transition={{ duration: 0.2 }}>
+        <StyledLayout>
           <Header />
           <Main>{Content}</Main>
         </StyledLayout>
