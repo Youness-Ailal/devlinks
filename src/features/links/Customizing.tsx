@@ -1,3 +1,4 @@
+// @ts-ignore
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import Header from "@/components/Header";

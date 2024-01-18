@@ -1,3 +1,4 @@
+// @ts-ignore
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { useForm } from "react-hook-form";

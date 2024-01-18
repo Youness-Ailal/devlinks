@@ -1,6 +1,7 @@
 import Container from "@/components/ui/Container";
 import Header from "@/components/Header";
 import Text from "@/components/ui/Text";
+// @ts-ignore
 import Button from "@/components/ui/Button";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";

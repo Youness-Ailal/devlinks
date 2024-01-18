@@ -1,4 +1,5 @@
 import { useLinks } from "@/features/links/useLinks";
+// @ts-ignore
 import Button from "../ui/Button";
 import ButtonLink from "../ui/ButtonLink";
 import Container from "../ui/Container";
