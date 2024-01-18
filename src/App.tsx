@@ -3,10 +3,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Suspense, lazy } from "react";
+import AppLayout from "./layouts/AppLayout";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 import ProfileProvider from "./context/ProfileContext";
 import SocialLinksProvider from "./context/LinksContext";
-import("./layouts/AppLayout");
 
 //pages
 const Dashboard = lazy(() => import("./pages/Dashboard"));
