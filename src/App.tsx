@@ -18,6 +18,7 @@ import UpdatePassword from "./pages/UpdatePassword";
 import ResetPassword from "./pages/ResetPassword";
 import DevLink from "./pages/DevLink";
 import SpinnerScreen from "./components/SpinnerScreen";
+import NotFound from "./pages/NotFound";
 
 //
 const queryClient = new QueryClient({
@@ -80,6 +81,7 @@ function App() {
               <Route path="signup" element={<SignUp />} />
               <Route path="update-password" element={<UpdatePassword />} />
               <Route path="reset-password" element={<ResetPassword />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
         </BrowserRouter>

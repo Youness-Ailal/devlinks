@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import bg from "/bg1.jpg";
 
 const Header = styled.div`
-  height: 24rem;
+  height: 38vh;
   border-radius: 0 0 2rem 2rem;
   padding-top: 1rem;
 

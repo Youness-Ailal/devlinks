@@ -30,6 +30,7 @@ type FormValues = {
   firstName: string;
   lastName: string;
   id: string;
+  bio: string;
   avatar: File[];
 };
 
@@ -37,7 +38,7 @@ function ProfileDetails() {
   const { user } = useUser() || {};
   const { userNames, isLoading: userNamesLoading } = useUserNames();
   const { email, user_metadata } = user || {};
-  const { full_name: fullName, avatar_url } = user_metadata || {};
+  const { full_name: fullName, avatar_url, bio } = user_metadata || {};
   const { links, isLoading: linksLoading } = useLinks();
 
   const { id } = links || {};
@@ -55,6 +56,7 @@ function ProfileDetails() {
       firstName,
       lastName,
       id,
+      bio,
     },
   });
   useEffect(() => {
@@ -70,10 +72,10 @@ function ProfileDetails() {
   const hasMadeChanges =
     firstName !== watch("firstName") ||
     lastName !== watch("lastName") ||
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     watch("avatar")?.length ||
-    id !== watch("id");
+    id !== watch("id") ||
+    bio !== watch("bio");
   function onSubmit({ ...data }: FormValues) {
     update({ ...data });
   }
@@ -114,7 +116,7 @@ function ProfileDetails() {
               <Input
                 disabled={isLoading}
                 error={errors?.firstName?.message.toString()}
-                type="texts"
+                type="text"
                 direction="y"
                 id="firstName"
                 label="First Name"
@@ -130,7 +132,7 @@ function ProfileDetails() {
                 disabled={isLoading}
                 error={errors?.lastName?.message.toString()}
                 direction="y"
-                type="texts"
+                type="text"
                 id="lastName"
                 label="Last Name"
                 {...register("lastName", {
@@ -141,6 +143,27 @@ function ProfileDetails() {
                   },
                 })}
               />
+              <div className="col-span-full">
+                <Input
+                  disabled={isLoading}
+                  error={errors?.bio?.message.toString()}
+                  direction="y"
+                  type="text"
+                  id="bio"
+                  label="bio"
+                  {...register("bio", {
+                    required: "This field is required",
+                    minLength: {
+                      value: 3,
+                      message: "please enter at least 3 characters",
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: "cannot be more than 50 characters",
+                    },
+                  })}
+                />
+              </div>
 
               <Input
                 className="!pl-[8.4rem] !pr-8"

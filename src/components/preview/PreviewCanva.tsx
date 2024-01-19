@@ -8,12 +8,13 @@ import styled from "styled-components";
 import DisplayIcon from "../DisplayIcon";
 import Spinner from "../Spinner";
 import defaultAvatar from "/avatar.svg";
+import { IoMailOutline } from "react-icons/io5";
 
 function PreviewCanva() {
   const { user } = useUser();
   const { email, user_metadata } = user || {};
   const { previewLinks, isLoading } = useLinksContext() || {};
-  const { full_name: fullName, avatar_url: avatar } = user_metadata || {};
+  const { full_name: fullName, avatar_url: avatar, bio } = user_metadata || {};
 
   const { fName, lName } = formatName(fullName);
   const fullNameFormated = `${fName} ${lName}`;
@@ -56,9 +57,14 @@ function PreviewCanva() {
     padding: 3rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
     background-color: var(--color-white);
     backdrop-filter: blur(4px);
+  `;
+  const CanvBio = styled.p`
+    font-size: 1rem;
+    color: var(--color-grey-600);
+    text-align: center;
   `;
   const CanvaLink = styled.a`
     width: 100%;
@@ -85,20 +91,18 @@ function PreviewCanva() {
 
   return (
     <Canva>
-      <UserImage
-        style={{ backgroundImage: `url(${avatar || defaultAvatar})` }}
-      />
-      <div className="flex flex-col items-center gap-1">
-        <h1 className="text-center font-semibold text-gray-800">
-          {fullName ? fullNameFormated : <br />}
-        </h1>
-        <EmailLink
-          href={`mailto:${email}`}
-          className="text-base text-gray-500 text-center">
-          {userEmail}
-        </EmailLink>
+      <div className="flex flex-col items-center justify-center gap-2">
+        <UserImage
+          style={{ backgroundImage: `url(${avatar || defaultAvatar})` }}
+        />
+        <div className="flex flex-col items-center justify-center gap-1">
+          <h1 className=" font-semibold text-gray-800">
+            {fullName ? fullNameFormated : <br />}
+          </h1>
+          <CanvBio>"{bio}"</CanvBio>
+        </div>
       </div>
-      <div className="mt-8 flex flex-col gap-6">
+      <div className="flex flex-col gap-5">
         {isLoading && <Spinner />}
         {!isLoading && previewLinks.length
           ? previewLinks.map(item => (
@@ -120,6 +124,12 @@ function PreviewCanva() {
             ))
           : null}
       </div>
+      <EmailLink
+        href={`mailto:${email}`}
+        className="self-center text-base text-gray-500 flex items-center gap-2">
+        <IoMailOutline />
+        {userEmail}
+      </EmailLink>
     </Canva>
   );
 }

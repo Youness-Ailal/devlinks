@@ -6,8 +6,6 @@ export function useUpdateUser() {
   const queryClient = useQueryClient();
 
   const { mutate: update, status } = useMutation({
-    // mutationFn: ({ firstName, lastName, avatar }: UserDataType) =>
-    //   updateUser({ firstName, lastName, avatar }),
     mutationFn: updateUser,
     onSuccess: () => {
       queryClient.invalidateQueries();

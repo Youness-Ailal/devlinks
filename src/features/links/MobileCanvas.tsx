@@ -11,9 +11,10 @@ import DisplayIcon from "@/components/DisplayIcon";
 import { FaArrowRight } from "react-icons/fa6";
 import { formatEmail, formatName } from "@/utils/helpers";
 import { Reorder } from "framer-motion";
+import { IoMailOutline } from "react-icons/io5";
 
 const StyledCanvas = styled.div`
-  height: 42rem;
+  height: 44rem;
   width: 24rem;
   margin: 0 auto;
   position: relative;
@@ -27,7 +28,7 @@ const Image = styled.div`
   height: 7rem;
   aspect-ratio: 1;
   position: absolute;
-  top: 4.5rem;
+  top: 3.8rem;
   left: 50%;
   translate: -50% 0;
   border-radius: 50%;
@@ -53,7 +54,7 @@ const ImageSkeleton = styled.div`
 `;
 const Name = styled.div`
   position: absolute;
-  top: 12.5rem;
+  top: 11.5rem;
   left: 50%;
   translate: -50% 0;
   border-radius: var(--radius-tiny);
@@ -69,7 +70,7 @@ const NameSkeleton = styled.div`
 `;
 const Email = styled.div`
   position: absolute;
-  top: 15rem;
+  top: 39.5rem;
   left: 50%;
   translate: -50% 0;
   border-radius: var(--radius-tiny);
@@ -79,12 +80,25 @@ const EmailSkeleton = styled.div`
   height: 1rem;
   background-color: var(--color-grey-200);
 `;
+const Bio = styled.div`
+  position: absolute;
+  top: 14rem;
+  left: 50%;
+  width: 17rem;
+  translate: -50% 0;
+  border-radius: var(--radius-tiny);
+`;
+const BioSkeleton = styled.div`
+  width: 17rem;
+  height: 3rem;
+  background-color: var(--color-grey-200);
+`;
 
 const CanvaLinks = styled(Reorder.Group)`
   position: absolute;
   width: 18rem;
   --height: 3rem;
-  top: 19rem;
+  top: 18rem;
   left: 50%;
   translate: -50% 0;
 
@@ -131,7 +145,7 @@ function MobileCanvas() {
   const { previewAvatar } = useProfile();
   const { user } = useUser() || {};
   const { email, user_metadata } = user || {};
-  const { full_name: fullName, avatar_url } = user_metadata || {};
+  const { full_name: fullName, avatar_url, bio } = user_metadata || {};
 
   const { fName, lName } = formatName(fullName);
   const emailAddress = formatEmail(email);
@@ -167,13 +181,15 @@ function MobileCanvas() {
             <NameSkeleton />
           )}
         </Name>
-        <Email>
-          {email && fullName ? (
-            <p className="text-[0.9rem] text-slate-700">{emailAddress}</p>
+        <Bio>
+          {bio ? (
+            <p className="text-base text-slate-600 text-center leading-5">
+              "{bio}"
+            </p>
           ) : (
-            <EmailSkeleton />
+            <BioSkeleton />
           )}
-        </Email>
+        </Bio>
         <CanvaLinks axis="y" values={previewLinks} onReorder={setPreviewLinks}>
           {!isLoading &&
             previewLinks.map(item => (
@@ -196,6 +212,16 @@ function MobileCanvas() {
             return <CanvaLinkSkeleton key={index} />;
           })}
         </CanvaLinks>
+        <Email>
+          {email && fullName ? (
+            <p className="text-[0.9rem] text-slate-500 flex items-center gap-2">
+              <IoMailOutline />
+              {emailAddress}
+            </p>
+          ) : (
+            <EmailSkeleton />
+          )}
+        </Email>
         <img
           draggable={false}
           src={canvas}

@@ -5,6 +5,8 @@ import ButtonLink from "./ButtonLink";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { RxDashboard } from "react-icons/rx";
 import styled from "styled-components";
+import { IoColorPaletteOutline } from "react-icons/io5";
+
 import { HiEye } from "react-icons/hi2";
 
 const NavLinks = styled.div`
@@ -29,6 +31,10 @@ function Header() {
           <RxDashboard />
           <p className="max-[700px]:hidden">Dashboard</p>
         </ButtonLink>
+        {/* <ButtonLink to="/themes">
+          <IoColorPaletteOutline />
+          <p className="max-[700px]:hidden">Themes</p>
+        </ButtonLink> */}
 
         <ButtonLink to="/account">
           <FaRegCircleUser />
@@ -40,12 +46,6 @@ function Header() {
           <HiEye className="block text-violet-500 min-[700px]:hidden" />
           <p className="max-[700px]:hidden">Preview</p>
         </ButtonLink>
-        {/* <ButtonLink
-          className=" self-stretch !px-4 !text-lg"
-          variant="outline"
-          to="/preview">
-          {<MdContentCopy />}
-        </ButtonLink> */}
       </div>
     </Container>
   );

@@ -114,6 +114,7 @@ export type UserDataType = {
   firstName?: string;
   lastName?: string;
   id?: string;
+  bio: string;
   avatar?: File[] | undefined;
 };
 
@@ -123,12 +124,15 @@ export async function updateUser({
   lastName,
   id,
   avatar,
+  bio,
 }: UserDataType) {
   //  update first name and/or last name
-  let updateData: { data: { full_name?: string; avatar_url?: string } };
+  let updateData: {
+    data: { full_name?: string; bio?: string; avatar_url?: string };
+  };
 
-  if (firstName && lastName) {
-    updateData = { data: { full_name: `${firstName} ${lastName}` } };
+  if (firstName && lastName && bio) {
+    updateData = { data: { full_name: `${firstName} ${lastName}`, bio } };
   }
   const { data: userData, error: userError } = await supabase.auth.getUser();
   if (userError) throw new Error(userError.message);
@@ -140,6 +144,7 @@ export async function updateUser({
     .update({
       full_name: `${firstName} ${lastName}`,
       email: userData.user.email,
+      bio,
       id: id.toLocaleLowerCase(),
     })
     .eq("user_id", userId);
@@ -177,7 +182,7 @@ export async function updateUser({
 // password reset link
 export async function getResetPassLink(email: string) {
   const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: "http://localhost:5173/update-password",
+    redirectTo: "https://devlinks.ailal.dev/update-password",
   });
 
   if (error) throw new Error(error.message);

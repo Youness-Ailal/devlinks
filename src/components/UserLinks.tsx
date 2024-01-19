@@ -8,6 +8,7 @@ import Spinner from "./Spinner";
 import DisplayIcon from "./DisplayIcon";
 import { useParams } from "react-router-dom";
 import { useUserLinks } from "@/features/links/useUserLinks";
+import { IoMailOutline } from "react-icons/io5";
 const UserImage = styled.div`
   height: 7rem;
   aspect-ratio: 1;
@@ -19,6 +20,7 @@ const UserImage = styled.div`
 `;
 const EmailLink = styled.a`
   position: relative;
+  margin-top: auto;
   &::after {
     content: "";
     position: absolute;
@@ -43,10 +45,15 @@ const Canva = styled.div`
   border: 1px solid var(--color-grey-300);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   background-color: var(--color-white);
   border-radius: var(--radius-md);
   margin: 0 auto;
+`;
+const CanvBio = styled.p`
+  font-size: 1rem;
+  color: var(--color-grey-600);
+  text-align: center;
 `;
 const CanvaLink = styled.a`
   width: 100%;
@@ -93,6 +100,7 @@ function UserLinks() {
     full_name,
     email,
     avatar_url: avatar,
+    bio,
   } = links || {};
 
   const { fName, lName } = formatName(full_name);
@@ -100,20 +108,16 @@ function UserLinks() {
   const userEmail = formatEmail(email);
   return (
     <Canva>
-      <UserImage
-        style={{ backgroundImage: `url(${avatar || defaultAvatar})` }}
-      />
-      <div className="flex flex-col items-center gap-1">
+      <div className="flex flex-col items-center justify-center gap-2">
+        <UserImage
+          style={{ backgroundImage: `url(${avatar || defaultAvatar})` }}
+        />
         <h1 className="text-center font-semibold text-gray-800">
           {full_name ? fullNameFormated : <br />}
         </h1>
-        <EmailLink
-          href={`mailto:${email}`}
-          className="text-base text-gray-500 text-center">
-          {userEmail}
-        </EmailLink>
+        <CanvBio>{bio ? `"${bio}"` : null}</CanvBio>
       </div>
-      <div className="mt-8 flex flex-col gap-6">
+      <div className="flex flex-col gap-5">
         {isLoading && <Spinner />}
         {!isLoading && previewLinks?.length
           ? previewLinks.map(item => (
@@ -135,6 +139,12 @@ function UserLinks() {
             ))
           : null}
       </div>
+      <EmailLink
+        href={`mailto:${email}`}
+        className="text-base self-center gap-1 flex items-center text-gray-500 text-center">
+        <IoMailOutline />
+        {userEmail}
+      </EmailLink>
     </Canva>
   );
 }

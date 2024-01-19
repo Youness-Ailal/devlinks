@@ -10,6 +10,7 @@ type InputProps = {
   error?: string;
   className?: string;
   type?: string;
+  as?: "input" | "textarea";
   extraElement?: ReactNode;
   extraText?: string;
   errorPosition?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
@@ -43,7 +44,9 @@ const StyledInput = styled.input`
     cursor: not-allowed;
     background-color: var(--color-grey-100);
   }
+  resize: none;
 `;
+
 const Label = styled.label`
   align-self: start;
   font-size: 1rem;
