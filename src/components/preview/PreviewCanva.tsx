@@ -18,7 +18,7 @@ function PreviewCanva() {
 
   const { fName, lName } = formatName(fullName);
   const fullNameFormated = `${fName} ${lName}`;
-  const userEmail = formatEmail(email);
+  const userEmail = formatEmail(email, 25);
 
   const UserImage = styled.div`
     height: 7rem;
@@ -50,8 +50,9 @@ function PreviewCanva() {
 
   const Canva = styled.div`
     min-height: 40rem;
-    max-width: 25rem;
+    max-width: 28rem;
     margin: 0 auto;
+    margin-bottom: 2rem;
     border-radius: var(--radius-md);
     box-shadow: 0 0 0.8rem 0.4rem rgba(0, 0, 0, 0.1);
     padding: 3rem;

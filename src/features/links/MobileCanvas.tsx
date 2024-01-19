@@ -15,12 +15,12 @@ import { IoMailOutline } from "react-icons/io5";
 
 const StyledCanvas = styled.div`
   height: 44rem;
-  width: 24rem;
+  width: 28rem;
   margin: 0 auto;
   position: relative;
 
-  @media (max-width: 1200px) {
-    height: 39rem;
+  @media (max-width: 1250px) {
+    height: 40rem;
     width: 20rem;
   }
 `;
@@ -33,7 +33,7 @@ const Image = styled.div`
   translate: -50% 0;
   border-radius: 50%;
   overflow: hidden;
-  @media (max-width: 1200px) {
+  @media (max-width: 1250px) {
     height: 6rem;
     top: 5.4rem;
   }
@@ -72,8 +72,12 @@ const Email = styled.div`
   position: absolute;
   top: 39.5rem;
   left: 50%;
+  min-width: 17rem;
   translate: -50% 0;
   border-radius: var(--radius-tiny);
+  @media (max-width: 1250px) {
+    top: 35rem;
+  }
 `;
 const EmailSkeleton = styled.div`
   width: 12rem;
@@ -106,7 +110,7 @@ const CanvaLinks = styled(Reorder.Group)`
   flex-direction: column;
   gap: 1.2rem;
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1250px) {
     width: 16rem;
     gap: 0.8rem;
     --height: 2.6rem;
@@ -148,7 +152,7 @@ function MobileCanvas() {
   const { full_name: fullName, avatar_url, bio } = user_metadata || {};
 
   const { fName, lName } = formatName(fullName);
-  const emailAddress = formatEmail(email);
+  const emailAddress = formatEmail(email, 25);
 
   let ImageContent: ReactNode = <ImageSkeleton />;
 
@@ -197,13 +201,13 @@ function MobileCanvas() {
                 value={item}
                 key={item.id}
                 className={cn(`${colors[item.name]}`)}>
-                <p className="text-gray-50 max-[1200px]:text-xl">
+                <p className="text-gray-50 max-[1250px]:text-xl">
                   <DisplayIcon iconName={item.name} />
                 </p>
-                <p className="text-base text-gray-100 font-medium max-[1200px]:text-sm">
+                <p className="text-base text-gray-100 font-medium max-[1250px]:text-sm">
                   {item.name}
                 </p>
-                <p className="ml-auto text-sm opacity-90 text-gray-100 max-[1200px]:text-sm">
+                <p className="ml-auto text-sm opacity-90 text-gray-100 max-[1250px]:text-sm">
                   <FaArrowRight />
                 </p>
               </CanvaLink>
@@ -213,8 +217,8 @@ function MobileCanvas() {
           })}
         </CanvaLinks>
         <Email>
-          {email && fullName ? (
-            <p className="text-[0.9rem] text-slate-500 flex items-center gap-2">
+          {email ? (
+            <p className="text-[0.9rem] text-slate-500 flex items-center justify-center gap-2">
               <IoMailOutline />
               {emailAddress}
             </p>

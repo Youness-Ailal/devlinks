@@ -40,7 +40,7 @@ const EmailLink = styled.a`
 const Canva = styled.div`
   padding: 3rem;
   min-height: 40rem;
-  max-width: 25rem;
+  max-width: 28rem;
   box-shadow: 0 0 0.8rem 0.1rem rgba(0, 0, 0, 0.1);
   border: 1px solid var(--color-grey-300);
   display: flex;
@@ -105,7 +105,7 @@ function UserLinks() {
 
   const { fName, lName } = formatName(full_name);
   const fullNameFormated = fName + " " + lName;
-  const userEmail = formatEmail(email);
+  const userEmail = formatEmail(email, 25);
   return (
     <Canva>
       <div className="flex flex-col items-center justify-center gap-2">

@@ -20,7 +20,7 @@ export function formatName(
 export function formatEmail(email: string, maxLength: number = 30) {
   const emailAddress =
     email?.length > maxLength
-      ? `${email.slice(0, 3)}...${email.slice(email.indexOf("@"))}`
+      ? `${email.slice(0, 5)}...${email.slice(email.indexOf("@"))}`
       : email || "";
 
   return emailAddress;
