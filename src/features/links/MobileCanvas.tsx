@@ -65,7 +65,7 @@ const Name = styled.div`
 
 const NameSkeleton = styled.div`
   width: 12rem;
-  height: 2rem;
+  height: 1.5rem;
   background-color: var(--color-grey-200);
 `;
 const Email = styled.div`
@@ -76,7 +76,7 @@ const Email = styled.div`
   border-radius: var(--radius-tiny);
 `;
 const EmailSkeleton = styled.div`
-  width: 8rem;
+  width: 12rem;
   height: 1rem;
   background-color: var(--color-grey-200);
 `;
@@ -90,7 +90,7 @@ const Bio = styled.div`
 `;
 const BioSkeleton = styled.div`
   width: 17rem;
-  height: 3rem;
+  height: 2rem;
   background-color: var(--color-grey-200);
 `;
 

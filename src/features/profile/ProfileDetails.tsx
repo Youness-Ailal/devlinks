@@ -198,10 +198,11 @@ function ProfileDetails() {
                       item => item.id.toLowerCase() !== id.toLowerCase()
                     );
                     const usersHasValue = users?.filter(
-                      item => item.id.toLowerCase() === value.toLowerCase()
+                      item => item.id.toLowerCase() !== value.toLowerCase()
                     );
+                    console.log(usersHasValue);
 
-                    if (users.length === usersHasValue.length)
+                    if (users.length !== usersHasValue.length)
                       return "Username already taken";
                   },
                 })}

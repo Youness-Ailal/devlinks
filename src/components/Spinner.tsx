@@ -37,7 +37,7 @@ function Spinner({
           background: color,
           width: `${width}px`,
           padding: `${padding}px`,
-          animation: `l3 ${speed}s infinite linear;`,
+          animation: `l3 ${speed}s infinite linear`,
         }}
       />
     </div>
