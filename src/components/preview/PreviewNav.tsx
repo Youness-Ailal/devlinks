@@ -16,16 +16,18 @@ function PreviewNav() {
   }
 
   return (
-    <Container
-      as="header"
-      className="flex items-center justify-between gap-4 py-4 px-6 mx-auto">
-      <ButtonLink to="/dashboard" variant="outline">
-        Back to Editor
-      </ButtonLink>
-      <div className="relative">
-        <Button onClick={handleLinkCopy}>Copy Link</Button>
-      </div>
-    </Container>
+    <div className="px-4">
+      <Container
+        as="header"
+        className="flex items-center justify-between gap-4 py-4 px-6 mx-auto">
+        <ButtonLink to="/dashboard" variant="outline">
+          Back to Editor
+        </ButtonLink>
+        <div className="relative">
+          <Button onClick={handleLinkCopy}>Copy Link</Button>
+        </div>
+      </Container>
+    </div>
   );
 }
 

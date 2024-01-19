@@ -52,7 +52,6 @@ function PreviewCanva() {
     min-height: 40rem;
     max-width: 28rem;
     margin: 0 auto;
-    margin-bottom: 2rem;
     border-radius: var(--radius-md);
     box-shadow: 0 0 0.8rem 0.4rem rgba(0, 0, 0, 0.1);
     padding: 3rem;

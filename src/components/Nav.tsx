@@ -5,7 +5,6 @@ import ButtonLink from "./ButtonLink";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { RxDashboard } from "react-icons/rx";
 import styled from "styled-components";
-import { IoColorPaletteOutline } from "react-icons/io5";
 
 import { HiEye } from "react-icons/hi2";
 
