@@ -1,7 +1,6 @@
 import { ComponentProps } from "react";
 import styled from "styled-components";
 import { twMerge } from "tailwind-merge";
-import Spinner from "./Spinner";
 
 type ButtonProps = ComponentProps<"button"> & {
   variant?: "primary" | "outline" | "ghost";
@@ -24,8 +23,9 @@ const StyledButton = styled.button`
     user-select: none;
     opacity: 0.8;
   }
-  @media (max-width: 400px) {
+  @media (max-width: 420px) {
     padding: var(--padding-sm);
+    font-size: 0.8rem;
   }
   position: relative;
   overflow: hidden;

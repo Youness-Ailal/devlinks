@@ -23,6 +23,9 @@ const StyledNavLink = styled(NavLink)`
   svg {
     font-size: 1.2rem;
   }
+  @media (max-width: 400px) {
+    padding: var(--padding-sm);
+  }
 `;
 const StyledLink = styled(Link)`
   padding: var(--padding-base);
@@ -38,8 +41,9 @@ const StyledLink = styled(Link)`
   &:hover {
     background-color: var(--color-brand-50);
   }
-  @media (max-width: 400px) {
+  @media (max-width: 420px) {
     padding: var(--padding-sm);
+    font-size: 0.8rem;
   }
 `;
 

@@ -8,7 +8,7 @@ import socials from "@/data/Socials";
 // import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { UserLinkType, useLinksContext } from "@/context/LinksContext";
 import { ChangeEvent, useState } from "react";
-import { Reorder } from "framer-motion";
+import { Reorder, useDragControls } from "framer-motion";
 
 type LinkRowType = {
   index: number;
@@ -19,6 +19,7 @@ type LinkRowType = {
 };
 
 const StyledFormRow = styled(Reorder.Item)`
+  user-select: none;
   display: flex;
   flex-direction: column;
   background-color: var(--color-grey-50);
@@ -37,6 +38,7 @@ function FormRow({
   formError,
 }: LinkRowType) {
   const { removePreviewLink, updatePreviewLink } = useLinksContext();
+  const controls = useDragControls();
   const socialDomain =
     previewLink.name === "Whatsapp"
       ? "wa"
@@ -77,8 +79,13 @@ function FormRow({
   }
   return (
     <>
-      <StyledFormRow value={previewLink}>
-        <div className="text-gray-500 text-xl flex items-center gap-2 cursor-grab pt-[2rem] pb-4 active:cursor-grabbing">
+      <StyledFormRow
+        dragListener={false}
+        dragControls={controls}
+        value={previewLink}>
+        <div
+          onPointerDown={e => controls.start(e)}
+          className="text-gray-500 text-xl flex items-center gap-2 cursor-grab pt-[2rem] pb-4 active:cursor-grabbing">
           <HiMiniBars2 />
           <p className="font-bold text-base ">Link #{index + 1}</p>
           <button
