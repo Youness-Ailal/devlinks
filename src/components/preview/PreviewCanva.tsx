@@ -92,7 +92,7 @@ function PreviewCanva() {
 
   return (
     <Canva>
-      <div className="flex flex-col items-center justify-center gap-2">
+      <div className="flex flex-col items-center justify-center gap-4">
         <UserImage
           style={{ backgroundImage: `url(${avatar || defaultAvatar})` }}
         />

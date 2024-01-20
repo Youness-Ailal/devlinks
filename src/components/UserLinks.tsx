@@ -108,7 +108,7 @@ function UserLinks() {
   const userEmail = formatEmail(email, 25);
   return (
     <Canva>
-      <div className="flex flex-col items-center justify-center gap-2">
+      <div className="flex flex-col items-center justify-center gap-4">
         <UserImage
           style={{ backgroundImage: `url(${avatar || defaultAvatar})` }}
         />
