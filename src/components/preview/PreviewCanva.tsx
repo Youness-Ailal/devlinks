@@ -31,6 +31,7 @@ function PreviewCanva() {
   `;
   const EmailLink = styled.a`
     position: relative;
+    margin-top: auto;
     &::after {
       content: "";
       position: absolute;
