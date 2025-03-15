@@ -1,0 +1,31 @@
+name: Ping Supabase to Prevent Pausing
+
+on:
+  schedule:
+    - cron: "0 9 * * 1,4" # Runs at 9:00 AM every Monday and Thursday
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install dependencies
+        run: npm install @supabase/supabase-js
+
+      - name: Ping Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          node -e "
+          const { createClient } = require('@supabase/supabase-js');
+          const supabase = createClient(https://gakqtvtrbioykashtqmq.supabase.co, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdha3F0dnRyYmlveWthc2h0cW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNDI5NzAsImV4cCI6MjA1NzYxODk3MH0.PROFWdUUyx0JBiDftD-sU6FB7cL5xp4w2z-E3k6X-rg);
+          supabase.from('links').select('id').limit(1).then(console.log).catch(console.error);
+          "

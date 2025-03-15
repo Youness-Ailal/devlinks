@@ -46,10 +46,18 @@ function FormRow({
 
   const [link, setLink] = useState(previewLink.link || "");
   const [error, setError] = useState("");
-  const urlRegex = new RegExp(
-    `^https?://(?:www\\.)?${socialDomain}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$`,
-    "ig"
-  );
+  let urlRegex: RegExp;
+  if (socialDomain?.toLocaleLowerCase() === "twitter") {
+    urlRegex = new RegExp(
+      `^https?://(?:www\\.)?(x|twitter)\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$`,
+      "ig"
+    );
+  } else {
+    urlRegex = new RegExp(
+      `^https?://(?:www\\.)?${socialDomain}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$`,
+      "ig"
+    );
+  }
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const inputValue = e.target.value;
@@ -68,7 +76,7 @@ function FormRow({
     });
   }
 
-  const options = socials.map(item => {
+  const options = socials.map((item) => {
     return {
       id: item.id,
       name: item.name,
@@ -84,7 +92,7 @@ function FormRow({
         dragControls={controls}
         value={previewLink}>
         <div
-          onPointerDown={e => controls.start(e)}
+          onPointerDown={(e) => controls.start(e)}
           className="text-gray-500 text-xl flex items-center gap-2 cursor-grab pt-[2rem] pb-4 active:cursor-grabbing">
           <HiMiniBars2 />
           <p className="font-bold text-base ">Link #{index + 1}</p>
@@ -108,7 +116,7 @@ function FormRow({
               error={error}
               value={link}
               onChange={handleInputChange}
-              onSubmit={e => console.log(e)}
+              onSubmit={(e) => console.log(e)}
               // required
               previewLink={previewLink}
             />

@@ -29,9 +29,14 @@ export async function signUpApi({ email, password }: loginCredentilasType) {
   }
 
   //2. insert new links row
+  const id = `${email.split("@")[0]}${new Date()
+    .getDay()
+    .toString()
+    .substring(0, 6)}`;
   const { error: linksError } = await supabase.from("links").insert({
     user_id: data.user.id,
     email: data.user.email,
+    id,
     links_list: [],
   });
   if (linksError) {
@@ -137,6 +142,8 @@ export async function updateUser({
   const { data: userData, error: userError } = await supabase.auth.getUser();
   if (userError) throw new Error(userError.message);
   const userId = userData.user.id;
+  console.log("user : ", userId);
+  console.log("new id : ", id);
 
   const { data, error } = await supabase.auth.updateUser(updateData);
   await supabase

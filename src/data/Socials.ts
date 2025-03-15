@@ -18,7 +18,7 @@ const socials: SocialType[] = [
   {
     id: "52",
     name: "Github",
-    label: "https://reddit.com/user/{username}",
+    label: "https://github.com/{username}",
   },
 
   {

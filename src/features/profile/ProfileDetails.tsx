@@ -124,7 +124,7 @@ function ProfileDetails() {
                   required: "This field is required",
                   minLength: {
                     value: 3,
-                    message: "please enter at least 3 characters",
+                    message: "enter at least 3 characters",
                   },
                 })}
               />
@@ -139,7 +139,7 @@ function ProfileDetails() {
                   required: "This field is required",
                   minLength: {
                     value: 3,
-                    message: "please enter at least 3 characters",
+                    message: "enter at least 3 characters",
                   },
                 })}
               />
@@ -155,7 +155,7 @@ function ProfileDetails() {
                     required: "This field is required",
                     minLength: {
                       value: 3,
-                      message: "please enter at least 3 characters",
+                      message: "enter at least 3 characters",
                     },
                     maxLength: {
                       value: 50,
@@ -185,25 +185,30 @@ function ProfileDetails() {
                 error={errors?.id?.message.toString()}
                 {...register("id", {
                   required: "This field is required",
+
                   minLength: {
                     value: 3,
-                    message: "please enter at least 3 characters",
+                    message: "enter at least 3 characters",
                   },
                   maxLength: {
                     value: 15,
                     message: "username too long!",
                   },
-                  validate: value => {
-                    const users = userNames?.filter(
-                      item => item.id.toLowerCase() !== id.toLowerCase()
-                    );
-                    const usersHasValue = users?.filter(
-                      item => item.id.toLowerCase() !== value.toLowerCase()
-                    );
-                    console.log(usersHasValue);
+                  validate: (value) => {
+                    if (userNames?.length == 0) {
+                      return false;
+                    } else {
+                      const users = userNames?.filter(
+                        (item) => item?.id?.toLowerCase() !== id?.toLowerCase()
+                      );
+                      const usersHasValue = users?.filter(
+                        (item) =>
+                          item.id?.toLowerCase() !== value?.toLowerCase()
+                      );
 
-                    if (users.length !== usersHasValue.length)
-                      return "Username already taken";
+                      if (users.length !== usersHasValue.length)
+                        return "Username already taken";
+                    }
                   },
                 })}
               />
