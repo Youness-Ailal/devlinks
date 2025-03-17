@@ -26,6 +26,6 @@ jobs:
         run: |
           node -e "
           const { createClient } = require('@supabase/supabase-js');
-          const supabase = createClient(https://gakqtvtrbioykashtqmq.supabase.co, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdha3F0dnRyYmlveWthc2h0cW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNDI5NzAsImV4cCI6MjA1NzYxODk3MH0.PROFWdUUyx0JBiDftD-sU6FB7cL5xp4w2z-E3k6X-rg);
+          const supabase = createClient('https://gakqtvtrbioykashtqmq.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdha3F0dnRyYmlveWthc2h0cW1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNDI5NzAsImV4cCI6MjA1NzYxODk3MH0.PROFWdUUyx0JBiDftD-sU6FB7cL5xp4w2z-E3k6X-rg');
           supabase.from('links').select('id').limit(1).then(console.log).catch(console.error);
           "
