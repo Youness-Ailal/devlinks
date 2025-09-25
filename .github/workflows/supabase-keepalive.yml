@@ -1,0 +1,66 @@
+# .github/workflows/supabase-keepalive.yml
+name: Keep Supabase Project Active
+
+on:
+  schedule:
+    # Run every 6 days (Supabase pauses after 7 days of inactivity)
+    - cron: '0 12 */6 * *'  # Every 6 days at noon UTC
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          npm install @supabase/supabase-js
+      
+      - name: Keep Supabase alive
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          node -e "
+            const { createClient } = require('@supabase/supabase-js');
+            
+            const supabase = createClient(
+              process.env.SUPABASE_URL,
+              process.env.SUPABASE_ANON_KEY
+            );
+            
+            async function keepAlive() {
+              try {
+                // Simple query to keep the database active
+                const { data, error } = await supabase
+                  .from('_supabase_migrations') // System table that should exist
+                  .select('*')
+                  .limit(1);
+                
+                if (error && !error.message.includes('does not exist')) {
+                  console.error('Error:', error);
+                  process.exit(1);
+                }
+                
+                console.log('✅ Supabase project kept alive successfully');
+                console.log('Timestamp:', new Date().toISOString());
+              } catch (err) {
+                console.error('Failed to keep alive:', err);
+                process.exit(1);
+              }
+            }
+            
+            keepAlive();
+          "
+      
+      - name: Log activity
+        run: |
+          echo "Keep-alive completed at $(date)"
