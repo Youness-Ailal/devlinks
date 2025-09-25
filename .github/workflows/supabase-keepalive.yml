@@ -41,7 +41,7 @@ jobs:
               try {
                 // Simple query to keep the database active
                 const { data, error } = await supabase
-                  .from('_supabase_migrations') // System table that should exist
+                  .from('links') // System table that should exist
                   .select('*')
                   .limit(1);
                 
